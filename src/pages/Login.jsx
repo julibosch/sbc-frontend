@@ -66,8 +66,8 @@ const Login = () => {
   const { msg } = alerta;
 
   return (
-    <>
-      <div className="my-16 w-5/6 mx-auto">
+    <div className='bg-purple-300 h-screen'>
+      <div className="py-16 w-5/6 mx-auto">
         <h2 className="text-4xl font-bold text-center">Inicia sesion para ver tu cuenta de SOCIO</h2>
       </div>
 
@@ -100,7 +100,7 @@ const Login = () => {
         </form>
       </div>
       <Footer />
-    </>
+    </div>
   )
 }
 

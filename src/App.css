@@ -1,19 +1,62 @@
-@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Pacifico&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Pacifico&family=Source+Sans+Pro:ital@0;1&display=swap');
 
 @tailwind components;
 @tailwind base;
 @tailwind utilities;
 
-@media (max-height: 700px) {
-  .se {
-    margin-bottom: 3rem;
+/* Media queries */
+@media (max-height: 720px) {
+  .se-mb {
+    margin-bottom: 0rem;
+  }
+
+  .se-text {
+    font-size: 2.5rem;
+    line-height: 1;
+  }
+
+  .se-icon {
+    width: 50px;
+    height: 50px;
   }
 }
 
+@media (min-height:721px) and (max-height: 750px) {
+  .md-mb {
+    margin-bottom: 1rem;
+  }
+}
+
+@media (min-height:751px) and (max-height: 849px) {
+  .md-mb {
+    margin-bottom: 2rem;
+  }
+}
+
+@media (min-height:850px) and (max-height: 920px) {
+  .lg-mb {
+    margin-bottom: 3rem;
+  }
+
+  .lg-py{
+    padding: 2rem 0;
+  }
+}
+
+/* Fuentes tipograficas */
 .pacifico {
   font-family: 'Pacifico', cursive;
 }
 
 .carter {
   font-family: 'Carter One', cursive;
+}
+
+.sans-pro {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+/* Clases apartes */
+.bg-qr {
+  background-color: #f0f8ff44;
 }
