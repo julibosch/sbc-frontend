@@ -1,3 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Carter+One&family=Pacifico&display=swap');
+
 @tailwind components;
 @tailwind base;
 @tailwind utilities;
+
+@media (max-height: 700px) {
+  .se {
+    margin-bottom: 3rem;
+  }
+}
+
+.pacifico {
+  font-family: 'Pacifico', cursive;
+}
+
+.carter {
+  font-family: 'Carter One', cursive;
+}
