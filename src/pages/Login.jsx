@@ -73,7 +73,7 @@ const Login = () => {
 
       {/* Escudo */}
       <div className='w-full h-44 md-escudo flex justify-center md-mb'>
-        <img className='h-full drop-shadow-2xl' src="../../public/escudo-sbc.png" alt=""/>
+        <img className='h-full drop-shadow-2xl' src="../../escudo-sbc.png" alt=""/>
       </div>
 
       <div className="w-5/6 mx-auto">
