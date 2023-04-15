@@ -31,9 +31,9 @@ const Perfil = () => {
     <div className="flex flex-col">
       <div className='flex flex-row h-1/3 p-8 md-mb lg-mb se-mb'>
         <div className='pacifico tracking-widest text-sbc-yellow'>
+          <p className="se-text text-5xl font-light mb-2">Tu club </p>
           <p className="se-text text-5xl font-light mb-2">Tu origen </p>
           <p className="se-text text-5xl font-light mb-2">Tu casa </p>
-          <p className="se-text text-5xl font-light mb-2">Tu club </p>
         </div>
         <button
           className="text-slate-800 h-14 w-14 absolute right-8 rounded-full shadow-md bg-yellow-400"

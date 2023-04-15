@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import * as XLSX from "xlsx";
-import clienteAxios from "../../config/axios";
-import SocioErroneo from "../../components/SocioErroneo";
-import Alerta from "../../components/Alerta";
+import clienteAxios from "../config/axios";
+import SocioErroneo from "./SocioErroneo";
+import Alerta from "./Alerta";
+import useAuth from "../hooks/useAuth";
 
 function LeerArchivo() {
   const [socios1, setSocios1] = useState([]);
@@ -11,6 +12,7 @@ function LeerArchivo() {
   const [estadoBoton, setEstadoBoton] = useState(true);
   const [sociosErroneo, setSociosErroneo] = useState([]); //Guarda los socios que tienen mal ingresado el dni
   const [alerta, setAlerta] = useState({});
+  const { cerrarSesion } = useAuth();
 
   const navigate = useNavigate();
 
@@ -109,14 +111,20 @@ function LeerArchivo() {
 
   }, [socios1, sociosErroneo])
 
+  const handleClick = () => {
+
+  }
+
   const { msg } = alerta;
 
   return (
     <>
+    <div className="flex flex-row w-full pb-1 bg-indigo-900 md-mb lg-mb se-mb">
       <h1
-        className="font-bold text-5xl text-yellow-400 text-center bg-indigo-900 py-6 mb-5">
+        className="font-bold text-5xl text-yellow-400 text-center mx-auto py-6 mb-5">
         SUBIR ARCHIVO DE EXCEL
       </h1>
+    </div>
 
       {msg &&
         <Alerta
@@ -130,7 +138,7 @@ function LeerArchivo() {
             type="file"
             accept=".xls"
             onChange={handleFileUpload}
-            className="text-xl mx-auto my-3"
+            className="text-xl mx-auto my-3 w-10/12"
           />
           <button
             type="submit"
@@ -157,6 +165,16 @@ function LeerArchivo() {
             </div>
             : null
         }
+        <button
+          className="text-slate-800 h-14 w-14 fixed right-8 bottom-12 rounded-full shadow-md bg-yellow-400"
+          onClick={cerrarSesion}       
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-circle-x" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#000000" fill="none" strokeLinecap="round" strokeLinejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+            <circle cx="12" cy="12" r="10" />
+            <path d="M10 10l4 4m0 -4l-4 4" />
+          </svg>
+        </button>
       </div>
     </>
   );

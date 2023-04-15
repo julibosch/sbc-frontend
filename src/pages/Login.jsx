@@ -47,11 +47,18 @@ const Login = () => {
       //Actualiza para poder navegar hacia el perfil.
       setAuth( socioData )
 
+
       // Se redirecciona dependiendo del tipoUsuario
       if(tipoUsuario === 'admin') {
-        navigate('/admin')
-      } else {
-        navigate(`/perfil/${id}`)
+        return navigate('/admin')
+      } 
+
+      if(tipoUsuario === "superadmin"){
+        return navigate('/superadmin')
+      }
+
+      if(tipoUsuario === "socio"){
+        return navigate(`/perfil/${id}`)
       };
 
     } catch (error) {

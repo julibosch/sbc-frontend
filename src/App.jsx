@@ -2,11 +2,17 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import AdminsLayout from './layout/AdminsLayout';
 import UsuariosLayout from './layout/UsuariosLayout';
+
 import AdminInicio from './pages/admin/AdminInicio';
-import LeerArchivo from './pages/admin/LeerArchivo';
+import LeerArchivo from './components/LeerArchivo';
 import ListaSocios from './pages/admin/ListaSocios';
+
 import Login from './pages/Login';
 import Perfil from './pages/socio/Perfil';
+
+
+import SuperAdminsLayout from './layout/SuperAdminsLayout';
+import SuperAdminInicio from './pages/superAdmin/SuperAdminInicio';
 
 import { AuthProvider } from './context/AuthProvider';
 import ScannerQR from './pages/admin/ScannerQR';
@@ -30,6 +36,11 @@ function App() {
             <Route path='cargar-archivo' element={<LeerArchivo />} />
             <Route path='socios' element={<ListaSocios />} />
             <Route path='scanner-qr' element={<ScannerQR />} />
+          </Route>
+
+          {/* Ruta al superAdmin */}
+          <Route path='/superadmin' element={<SuperAdminsLayout />}>
+            <Route index element={<SuperAdminInicio />} />
           </Route>
         </Routes>
       </AuthProvider>
