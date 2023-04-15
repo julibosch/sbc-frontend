@@ -66,26 +66,31 @@ const Login = () => {
   const { msg } = alerta;
 
   return (
-    <div className='bg-purple-300 h-screen'>
-      <div className="py-16 w-5/6 mx-auto">
-        <h2 className="text-4xl font-bold text-center">Inicia sesion para ver tu cuenta de SOCIO</h2>
+    <div className=' bg-gradient-to-b from-sbc-blue to-blue-600 h-screen texture'>
+      <div className="pt-6 px-8 pb-4 md-mb md-mb2 mb-4 w-full mx-auto shadow separator">
+        <h2 className="text-xl text-center text-yellow-300 carter separator-text">Inicia sesión para ver tu cuenta de <span className='text-sbc-yellow underline underline-offset-2'>SOCIO</span></h2>
       </div>
 
-      <div className="mt-6 w-5/6 mx-auto">
-        <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      {/* Escudo */}
+      <div className='w-full h-44 md-escudo flex justify-center md-mb'>
+        <img className='h-full drop-shadow-2xl' src="../../public/escudo-sbc.png" alt=""/>
+      </div>
+
+      <div className="w-5/6 mx-auto">
+        <form className="bg-login-form shadow-md rounded px-8 pt-6 pb-8 mb-4"
           onSubmit={handleSubmit}
         >
           <div className="mb-4">
-            <label className="block text-gray-700 font-bold mb-2" htmlFor="apellido">
+            <label className="sans-pro block text-slate-100 font-normal text-lg" htmlFor="apellido">
               Apellido
             </label>
-            <input autoComplete='off' ref={apellido} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="apellido" type="text" placeholder="Ingresa tu Apellido" />
+            <input autoComplete='off' ref={apellido} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-slate-300" id="apellido" type="text" placeholder="Ingresa tu Apellido" />
           </div>
           <div className="mb-6">
-            <label className="block text-gray-700 font-bold mb-2" htmlFor="dni">
+            <label className="sans-pro block text-slate-100 font-normal text-lg" htmlFor="dni">
               DNI
             </label>
-            <input ref={dni} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="dni" type="number" pattern="\d*" inputMode="numeric" placeholder="Ingresa tu DNI" />
+            <input ref={dni} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-300" id="dni" type="number" pattern="\d*" inputMode="numeric" placeholder="Ingresa tu DNI" />
           </div>
 
           {msg && <Alerta
@@ -93,7 +98,7 @@ const Login = () => {
           />}
 
           <div className="flex items-center justify-between">
-            <button className="w-full bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+            <button className="carter w-full bg-sbc-yellow hover:bg-yellow-600 text-cta-azul font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text text-lg" type="submit">
               Iniciar Sesión
             </button>
           </div>

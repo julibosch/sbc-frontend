@@ -23,17 +23,43 @@
 
 @media (min-height:721px) and (max-height: 750px) {
   .md-mb {
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .md-mb2 {
+    margin-bottom: 2rem;
+  }
+
+  .md-escudo {
+    height: 14rem;
   }
 }
 
 @media (min-height:751px) and (max-height: 849px) {
   .md-mb {
-    margin-bottom: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .md-escudo {
+    height: 16rem;
+    margin-bottom: 1rem;
   }
 }
 
-@media (min-height:850px) and (max-height: 920px) {
+@media (min-height:850px) and (max-height: 1000px) {
+  .md-mb {
+    margin-bottom: 4rem;
+  }
+
+  .separator {
+    height: 7rem;
+  }
+
+  .md-escudo {
+    height: 17rem;
+    margin-bottom: 1rem;
+  }
+
   .lg-mb {
     margin-bottom: 3rem;
   }
@@ -58,5 +84,24 @@
 
 /* Clases apartes */
 .bg-qr {
-  background-color: #f0f8ff44;
+  background-color: #f0f8ff4b;
+}
+
+.bg-login-form {
+  background-color: #0b3264d3;
+} 
+
+.text-cta-azul {
+  color: #012758;
+}
+
+.separator {
+  border-bottom-left-radius: 50% 15%;
+  border-bottom-right-radius: 50% 15%;
+  background-color: #092850d3;
+}
+
+.texture {
+  background-color: #094799;
+background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23090447' fill-opacity='0.4' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
 }

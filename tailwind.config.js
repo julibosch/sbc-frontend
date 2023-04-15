@@ -5,7 +5,8 @@ export default {
     extend: {
       colors: {
         'sbc-blue': '#0339A6',
-        'sbc-yellow': '#F2CB05'
+        'sbc-yellow': '#F2CB05',
+        'sbc-login': '#094799' 
       }
     },
   },
