@@ -67,13 +67,13 @@ const Login = () => {
 
   return (
     <div className=' bg-gradient-to-b from-sbc-blue to-blue-600 h-screen texture'>
-      <div className="pt-6 px-8 pb-4 md-mb md-mb2 mb-4 w-full mx-auto shadow separator">
+      <div className="pt-6 px-8 pb-4 md-mb md-mb2 mb-4 w-full mx-auto shadow-md separator">
         <h2 className="text-xl text-center text-yellow-300 carter separator-text">Inicia sesión para ver tu cuenta de <span className='text-sbc-yellow underline underline-offset-2'>SOCIO</span></h2>
       </div>
 
       {/* Escudo */}
       <div className='w-full h-44 md-escudo flex justify-center md-mb'>
-        <img className='h-full drop-shadow-2xl' src="../../escudo-sbc.png" alt=""/>
+        <img className='h-full drop-shadow-2xl' src="../../escudo-sbc.png" alt="Escudo SBC"/>
       </div>
 
       <div className="w-5/6 mx-auto">
