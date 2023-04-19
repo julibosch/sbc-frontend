@@ -17,6 +17,8 @@ function LeerArchivo() {
   const navigate = useNavigate();
 
   const handleFileUpload = (e) => {
+
+    setSociosErroneo([]);
     const archivo = e.target.files[0];
     const reader = new FileReader();
 
@@ -108,12 +110,7 @@ function LeerArchivo() {
         setEstadoBoton(false)
       }
     }
-
   }, [socios1, sociosErroneo])
-
-  const handleClick = () => {
-
-  }
 
   const { msg } = alerta;
 
