@@ -7,8 +7,7 @@ const SuperAdminsLayout = () => {
 
   return (
     <>
-      <main className='container mx-auto h-screen'>
-        {/* SI EN EL OBJETO AUTH HAY UNA PROPIEDAD LLAMADA codigoSocio */}
+      <main className='w-full mx-auto h-screen'>
         {auth.tipoUsuario === "superadmin" ? <Outlet /> : <Navigate to="/" />}
       </main>
       <Footer />
@@ -16,4 +15,4 @@ const SuperAdminsLayout = () => {
   )
 }
 
-export default SuperAdminsLayout
+export default SuperAdminsLayout;

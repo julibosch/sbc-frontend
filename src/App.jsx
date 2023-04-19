@@ -33,7 +33,6 @@ function App() {
           {/* RUTAS PROTEGIDA DEL ADMIN */}
           <Route path='/admin' element={<AdminsLayout />}>
             <Route index element={<AdminInicio />} />
-            <Route path='cargar-archivo' element={<LeerArchivo />} />
             <Route path='socios' element={<ListaSocios />} />
             <Route path='scanner-qr' element={<ScannerQR />} />
           </Route>
