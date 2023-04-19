@@ -72,7 +72,7 @@ const ScannerQR = () => {
           <h2 className='text-center font-normal carter text-4xl uppercase text-slate-200 ml-5'>scanner</h2>
         </div>
 
-        <div className='w-3/4 h-64 mx-auto'>
+        <div className='w-3/4 h-2/6 mx-auto'>
           <video ref={ref} />
         </div>
 
