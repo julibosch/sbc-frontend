@@ -56,7 +56,7 @@ const ScannerQR = () => {
 
   return (
     <>
-      <div className='flex flex-col gap-4 h-screen pb-14'>
+      <div className='flex flex-col gap-10 h-screen pb-14'>
         <div className='bg-login-form h-24 flex items-center justify-center shadow-md'>
           <button
             className='w-16 h-16 left-5 absolute bg-sbc-yellow flex justify-center items-center rounded-full shadow-md'
