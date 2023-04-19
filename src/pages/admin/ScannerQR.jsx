@@ -73,7 +73,7 @@ const ScannerQR = () => {
         </div>
 
         <div className='w-3/4 h-32 mx-auto'>
-          <video className='h-32' ref={ref} />
+          <video ref={ref} />
         </div>
 
         {Object.keys(data).length !== 0 ?
