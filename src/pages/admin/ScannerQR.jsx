@@ -56,7 +56,7 @@ const ScannerQR = () => {
 
   return (
     <>
-      <div className='flex flex-col gap-12 h-screen pb-14'>
+      <div className='flex flex-col gap-4 h-screen pb-14'>
         <div className='bg-login-form h-24 flex items-center justify-center shadow-md'>
           <button
             className='w-16 h-16 left-5 absolute bg-sbc-yellow flex justify-center items-center rounded-full shadow-md'
@@ -72,8 +72,8 @@ const ScannerQR = () => {
           <h2 className='text-center font-normal carter text-4xl uppercase text-slate-200 ml-5'>scanner</h2>
         </div>
 
-        <div className='w-3/4 h-52 flex justify-center mx-auto'>
-          <video ref={ref} />
+        <div className='w-3/4 h-72 flex justify-center mx-auto'>
+          <video ref={ref} style={{ width: '16rem', height: '16rem' }}/>
         </div>
 
         {Object.keys(data).length !== 0 ?
