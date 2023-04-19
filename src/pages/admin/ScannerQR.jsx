@@ -72,10 +72,6 @@ const ScannerQR = () => {
           <h2 className='text-center font-normal carter text-4xl uppercase text-slate-200 ml-5'>scanner</h2>
         </div>
 
-        <div className='w-3/4 mx-auto sans-pro font-bold text-slate-300'>
-          <p className='w-full text-center'>Escaneá el QR para obtener la informacion del socio</p>
-        </div>
-
         <div className='w-3/4 mx-auto'>
           <video ref={ref} />
         </div>
