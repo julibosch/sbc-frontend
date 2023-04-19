@@ -73,7 +73,7 @@ const ScannerQR = () => {
         </div>
 
         <div className='w-3/4 h-72 flex justify-center mx-auto'>
-          <video ref={ref} style={{ width: '16rem', height: '16rem' }}/>
+          <video ref={ref} style={{ width: '18rem', height: '18rem' }}/>
         </div>
 
         {Object.keys(data).length !== 0 ?
