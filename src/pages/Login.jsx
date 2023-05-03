@@ -1,19 +1,17 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
 import Alerta from '../components/Alerta';
-import clienteAxios from "../config/axios";
-import useAuth from '../hooks/useAuth';
+import AuthContext from '../context/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 const Login = () => {
   const [alerta, setAlerta] = useState({});
+  const { login,tipoUsuario } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
   const apellido = useRef();
   const dni = useRef();
-
-  const { setAuth } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -27,41 +25,20 @@ const Login = () => {
 
     //Manda la info al Back
     try {
-      const url = "/login";
-      const data = {
-        apellido: apellido.current.value,
-        dni: dni.current.value
-      };
       
-      // Post al back
-      const response = await clienteAxios.post(url, data);
-      
-      // Se destructura la info del socio
-      const tipoUsuario = response.data.tipoUsuario;
-      const id = response.data._id;
-
-      // Se almacena la info en el localStorage
-      const socioData = {tipoUsuario, id};
-      localStorage.setItem("socioData", JSON.stringify(socioData));
-      
-      //Actualiza para poder navegar hacia el perfil.
-      setAuth( socioData )
-
+      login(dni.current.value, apellido.current.value);
 
       // Se redirecciona dependiendo del tipoUsuario
-      if(tipoUsuario === 'admin') {
-        return navigate('/admin')
-      } 
-
-      if(tipoUsuario === "superadmin"){
-        return navigate('/superadmin')
-      }
-
-      if(tipoUsuario === "socio"){
-        return navigate(`/perfil/${id}`)
-      };
+      // if (tipoUsuario !== "admin" || tipoUsuario !== "superadmin" || tipoUsuario !== "socio") {
+      //   return setAlerta({
+      //     msg: "Socio no existente",
+      //     error:true
+      //   })
+      // }
+      
 
     } catch (error) {
+      return console.log(error)
       setAlerta({
         msg: error.response.data.msg,
         error:true

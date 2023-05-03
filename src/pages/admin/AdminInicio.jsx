@@ -5,7 +5,7 @@ const AdminInicio = () => {
 
   const navigate = useNavigate();
 
-  const { cerrarSesion } = useAuth();
+  const { logout } = useAuth();
 
   const handleClick = (e) => {
     const target = e.target.textContent;
@@ -18,15 +18,17 @@ const AdminInicio = () => {
     }
   }
 
+  
+
   return (
     <>
       <div className="text-center flex flex-col justify-between h-5/6">
         <div className="py-8 bg-login-form shadow-md w-full">
           <button
             className="absolute right-4 top-4 shadow-md rounded-full bg-yellow-500"
-            onClick={cerrarSesion}
+            onClick={logout}
           >
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-x" width="55" height="55" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#000000" fill="none" strokeLinecap="round" strokeLinejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-circle-x" width="55" height="55" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#000000" fill="none" strokeLinecap="round" strokeLinejoin="round">
               <path stroke="none" d="M0 0h24v24H0z" fill="none" />
               <circle cx="12" cy="12" r="9" />
               <path d="M10 10l4 4m0 -4l-4 4" />

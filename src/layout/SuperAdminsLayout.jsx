@@ -4,11 +4,12 @@ import useAuth from '../hooks/useAuth';
 
 const SuperAdminsLayout = () => {
   const { auth, cargando } = useAuth();
+  console.log(auth)
 
   return (
     <>
       <main className='w-full mx-auto h-screen'>
-        {auth.tipoUsuario === "superadmin" ? <Outlet /> : <Navigate to="/" />}
+        {tipoUsuario === "superadmin" ? <Outlet /> : <Navigate to="/" />}
       </main>
       <Footer />
     </>

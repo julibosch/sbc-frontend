@@ -1,48 +1,72 @@
 import { useState, useEffect, createContext } from 'react';
+import clienteAxios from "../config/axios";
+import { useNavigate } from 'react-router-dom';
 
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [auth, setAuth] = useState({});
+  const [dni, setDni] = useState("");
+  const [idUsuario, setIdUsuario] = useState("");
+  const [tipoUsuario, setTipoUsuario] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // usamos el state "cargando" para saber cuando termina de setear "auth" con la data del socio en el try.
-  const [cargando, setCargando] = useState(true); 
+  const navigate = useNavigate();
+  console.log(tipoUsuario)
 
-  useEffect(() => {
-    const autenticarUsuario = async () => {
-      try {
-        const data = await JSON.parse(localStorage.getItem("userData"));
-        if (!data) {
-          // Si no hay data(nada en localStorage) entonces el cargando se setea a false y se retorna para que el auth quede vacio y en la validacion de las rutas protegidas(UsuariosLayout y AdminLayout) se redireccione al login.
-          setCargando(false);
-          return;
-        };
+  const login = async (dniParam,apellidoParam) => {
 
-        // Si hay data(Datos del socio en el localStorage) entonces se setea "auth" con esa data.
-        setAuth(data); 
-      } catch (error) {
-        setAuth({}); // En caso de cualquier error en la consulta, se setea vacio.
+    const data = {
+        apellido: apellidoParam,
+        dni: dniParam
       };
 
-      // Camino del try: Luego de que se setee el auth con la data del socio, se setea el cargando en false.
-      setCargando(false);
-    };
+      try {
 
-    autenticarUsuario();
-  }, [])
+        const response = await clienteAxios.post('/login', data);
+        setDni(response.data.dni);
+        setIdUsuario(response.data._id);
+        setTipoUsuario(response.data.tipoUsuario)
+        setIsLoggedIn(true);
 
-  const cerrarSesion = () => {
-    localStorage.removeItem("socioData");
-    setAuth({});
+        
+
+      } catch (error) {
+        console.log(error)
+      }
+  }
+
+  const logout = () => {
+    setIsLoggedIn(false);
+    setIdUsuario('');
+    setTipoUsuario("");
+    setDni('');
   };
+  
+
+  useEffect(() => {
+    if(tipoUsuario === 'admin') {
+      return navigate('/admin')
+    } 
+
+    if(tipoUsuario === "superadmin"){
+      return navigate('/superadmin')
+    }
+
+    if(tipoUsuario === "socio"){
+      return navigate(`/perfil/${id}`)
+    };
+    
+  }, [tipoUsuario])
 
   return (
     <AuthContext.Provider
       value={{
-        auth,
-        setAuth,
-        cargando, //Se pasa el cargando, para saber cuando es que se termina de hacer el seteo de los states.
-        cerrarSesion
+        dni,
+        idUsuario,
+        isLoggedIn,
+        tipoUsuario,
+        login,
+        logout 
       }}
     >
       {children}
@@ -51,7 +75,7 @@ const AuthProvider = ({ children }) => {
 }
 
 export {
-  AuthProvider
+  AuthProvider,
 };
 
 export default AuthContext;
