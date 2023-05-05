@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
 import * as XLSX from "xlsx";
 import clienteAxios from "../config/axios";
 import SocioErroneo from "./SocioErroneo";
@@ -10,11 +9,9 @@ function LeerArchivo() {
   const [socios1, setSocios1] = useState([]);
   const [socios2, setSocios2] = useState([]);
   const [estadoBoton, setEstadoBoton] = useState(true);
-  const [sociosErroneo, setSociosErroneo] = useState([]); //Guarda los socios que tienen mal ingresado el dni
+  const [sociosErroneo, setSociosErroneo] = useState([]); //Guarda los socios que tienen mal ingresado el dni, tambien recibe los socios con codigo duplicados del back
   const [alerta, setAlerta] = useState({});
   const { cerrarSesion } = useAuth();
-
-  const navigate = useNavigate();
 
   const handleFileUpload = (e) => {
 
@@ -37,7 +34,7 @@ function LeerArchivo() {
       for (let i = 1; i < primeraMitad; i++) {
         const [codigo, nombreCompleto, cuotasAdeudadas, dni] = datos[i];
 
-        if (!dni || dni.length > 8 || dni.length < 8) {
+        if (!dni ) {
 
           const nuevoErroneo = {
             nombreCompleto,
@@ -55,7 +52,7 @@ function LeerArchivo() {
       for (let i = primeraMitad; i < datos.length; i++) {
         const [codigo, nombreCompleto, cuotasAdeudadas, dni] = datos[i];
 
-        if (!dni || dni.length > 8 || dni.length < 8) {
+        if (!dni) {
 
           const nuevoErroneo = {
             nombreCompleto,
@@ -81,12 +78,12 @@ function LeerArchivo() {
   const sendData = async (socios) => {
     try {
       const response = await clienteAxios.post('/admin/cargar-archivo', socios);
-      setAlerta({ msg: response.data.msg, error: false });
-      setTimeout(() => {
-        navigate('/admin');
-      }, 2000);
+      console.log(response)
+      setAlerta({ msg: response.data.msg, error: false }); //Muestra si esta bien  todo los socios o si hay socios bien y mal.
+      setSociosErroneo(response.data.sociosDuplicados); //Guarda los socios con codigo duplicados y se muestra en la vista
     } catch (error) {
-      console.log(error);
+      console.log(error)
+      setAlerta({ msg: response.data.msg, error: true });
     }
   };
 
@@ -97,7 +94,7 @@ function LeerArchivo() {
       await Promise.all([promise1, promise2]);
       console.log('Ambas solicitudes POST se completaron exitosamente');
     } catch (error) {
-      console.log(error);
+      setAlerta({ msg:"Hubo un error, intentalo nuevamente. ", error: true });
     }
   };
 
