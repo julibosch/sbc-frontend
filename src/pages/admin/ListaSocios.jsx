@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import socioAxios from "../../config/axios";
 
 const ListaSocios = () => {
-  const [socios, setSocios] = useState([]);
-
+  const [socios, setSocios] = useState([]); //Arreglo original de socios
+  const [sociosFiltrados, setSociosFiltrados] = useState([]); //Arreglo secundario, para no modificar el original
 
   const navigate = useNavigate();
 
@@ -13,7 +13,14 @@ const ListaSocios = () => {
   };
 
   const handleChange = (e) => {
-    console.log(e.target.value);
+    const inputValue = e.target.value;
+
+    const sociosFiltrados = socios.filter(socio => 
+      socio.nombreCompleto.toLowerCase().includes(inputValue.toLowerCase()) || 
+      socio.dni.toLowerCase().includes(inputValue.toLowerCase())
+    );
+
+    setSociosFiltrados(sociosFiltrados);
   }
 
   useEffect(() => {
@@ -21,6 +28,7 @@ const ListaSocios = () => {
       try {
         const response = await socioAxios.get("/admin/socios");
         setSocios(response.data);
+        setSociosFiltrados(response.data);
       } catch (error) {
         console.log(error);
       }
@@ -75,21 +83,21 @@ const ListaSocios = () => {
           </div>
         </div>
 
-        <table className="table-auto shadow-lg border bg-yellow-400 bg-opacity-70 w-full">
-          <thead className="carter bg-yellow-400 bg-opacity-70 text-cta-azul">
+        <table className="table-auto shadow-lg border w-full">
+          <thead className="carter bg-yellow-400 text-cta-azul">
             <tr className="h-12">
               <th className="text-left pl-3">DNI</th>
               <th className="text-left pl-3">Nombre Completo</th>
-              <th className="pr-3">Cuotas</th>
+              <th className="px-2">Cuotas</th>
             </tr>
           </thead>
           <tbody className="sans-pro ">
-            {socios &&
-              socios.map((socio, index) => (
-                <tr className="border-y border-slate-700 h-12 font-semibold" key={index}>
+            {sociosFiltrados &&
+              sociosFiltrados.map((socio, index) => (
+                <tr className={`${socio.cuotasAdeudadas < 3 ? "bg-green-400" : "bg-red-400"} border-y border-slate-700 h-12 font-semibold`} key={index}>
                   <td className="pl-3">{socio.dni}</td>
                   <td className="pl-3">{socio.nombreCompleto}</td>
-                  <td className="text-center pr-3 font-bold text-lg">{socio.cuotasAdeudadas}</td>
+                  <td className="text-center font-bold text-lg">{socio.cuotasAdeudadas}</td>
                 </tr>
               ))}
           </tbody>
