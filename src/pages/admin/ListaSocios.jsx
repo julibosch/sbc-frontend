@@ -40,7 +40,7 @@ const ListaSocios = () => {
     <div className="flex flex-col bg-sbc-login">
       <div className="h-20 bg-login-form shadow-lg items-center flex flex-row mb-4">
         <button
-          className="w-16 h-16 left-2 absolute bg-indigo-700 flex justify-center items-center rounded-full shadow-md"
+          className="w-16 h-16 left-2 absolute bg-indigo-600 flex justify-center items-center rounded-full shadow-md"
           onClick={handleNavigation}
         >
           <svg
@@ -97,7 +97,7 @@ const ListaSocios = () => {
                 <tr className={`${socio.cuotasAdeudadas < 3 ? "bg-green-400" : "bg-red-400"} border-y border-slate-700 h-12 font-semibold`} key={index}>
                   <td className="pl-3">{socio.dni}</td>
                   <td className="pl-3">{socio.nombreCompleto}</td>
-                  <td className="text-center font-bold text-lg">{socio.cuotasAdeudadas}</td>
+                  <td className="text-center font-extrabold text-xl">{socio.cuotasAdeudadas}</td>
                 </tr>
               ))}
           </tbody>

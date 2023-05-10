@@ -83,7 +83,7 @@ const Login = () => {
         <img className='h-full drop-shadow-2xl' src="../../escudo-sbc.png" alt="Escudo SBC"/>
       </div>
 
-      <div className="w-5/6 mx-auto">
+      <div className="w-5/6 mx-auto lg:w-2/4">
         <form className="bg-login-form shadow-md rounded px-8 pt-6 pb-8 mb-4"
           onSubmit={handleSubmit}
         >
@@ -91,13 +91,13 @@ const Login = () => {
             <label className="sans-pro block text-slate-100 font-normal text-lg" htmlFor="apellido">
               Apellido
             </label>
-            <input autoComplete='off' ref={apellido} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-slate-300" id="apellido" type="text" placeholder="Ingresa tu Apellido" />
+            <input autoComplete='off' ref={apellido} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none shadow-inset bg-slate-300" id="apellido" type="text" placeholder="Ingresa tu Apellido" />
           </div>
           <div className="mb-6">
             <label className="sans-pro block text-slate-100 font-normal text-lg" htmlFor="dni">
               DNI
             </label>
-            <input ref={dni} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline bg-slate-300" id="dni" type="number" pattern="\d*" inputMode="numeric" placeholder="Ingresa tu DNI" />
+            <input ref={dni} className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none shadow-inset bg-slate-300" id="dni" type="number" pattern="\d*" inputMode="numeric" placeholder="Ingresa tu DNI" />
           </div>
 
           {msg && <Alerta
