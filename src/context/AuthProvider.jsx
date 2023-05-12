@@ -26,6 +26,7 @@ const AuthProvider = ({ children }) => {
         setDni(response.data.dni);
         setIdUsuario(response.data._id);
         setTipoUsuario(response.data.tipoUsuario)
+        
         setIsLoggedIn(true);
 
         
@@ -53,7 +54,7 @@ const AuthProvider = ({ children }) => {
     }
 
     if(tipoUsuario === "socio"){
-      return navigate(`/perfil/${id}`)
+      return navigate(`/perfil/${idUsuario}`)
     };
     
   }, [tipoUsuario])

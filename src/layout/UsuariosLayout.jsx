@@ -3,13 +3,13 @@ import Footer from '../components/Footer';
 import useAuth from '../hooks/useAuth';
 
 const UsuariosLayout = () => {
-  const { auth, cargando } = useAuth();
+  const { tipoUsuario } = useAuth();
 
   return (
     <>
       <main className='container mx-auto h-screen bg-gradient-to-t from-sbc-yellow to-sbc-blue to-80%'>
         {/* SI EN EL OBJETO AUTH HAY UNA PROPIEDAD LLAMADA codigoSocio */}
-        {auth.tipoUsuario === "socio" ? <Outlet /> : <Navigate to="/" />}
+        {tipoUsuario === "socio" ? <Outlet /> : <Navigate to="/" />}
       </main>
       <Footer />
     </>

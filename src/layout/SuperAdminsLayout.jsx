@@ -3,8 +3,8 @@ import Footer from '../components/Footer';
 import useAuth from '../hooks/useAuth';
 
 const SuperAdminsLayout = () => {
-  const { auth, cargando } = useAuth();
-  console.log(auth)
+  const { tipoUsuario } = useAuth();
+  console.log(tipoUsuario)
 
   return (
     <>

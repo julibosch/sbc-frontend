@@ -12,7 +12,7 @@ function LeerArchivo() {
   const [estadoBoton, setEstadoBoton] = useState(true);
   const [sociosErroneo, setSociosErroneo] = useState([]); //Guarda los socios que tienen mal ingresado el dni
   const [alerta, setAlerta] = useState({});
-  const { cerrarSesion } = useAuth();
+  const { logout } = useAuth();
 
   const navigate = useNavigate();
 
@@ -164,7 +164,7 @@ function LeerArchivo() {
         }
         <button
           className="text-slate-800 h-14 w-14 fixed right-8 bottom-12 rounded-full shadow-md bg-yellow-400"
-          onClick={cerrarSesion}       
+          onClick={logout}       
         >
           <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-circle-x" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#000000" fill="none" strokeLinecap="round" strokeLinejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />

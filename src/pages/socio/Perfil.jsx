@@ -7,7 +7,7 @@ import useAuth from '../../hooks/useAuth';
 const Perfil = () => {
   const [nombreSocio, setNombreSocio] = useState('');
   const params = useParams();
-  const { cerrarSesion } = useAuth();
+  const { logout } = useAuth();
 
   const dataSocio = { id: params.id };
   const datosQR = JSON.stringify(dataSocio)
@@ -37,7 +37,7 @@ const Perfil = () => {
         </div>
         <button
           className="text-slate-800 h-14 w-14 absolute right-8 rounded-full shadow-md bg-yellow-400"
-          onClick={cerrarSesion}
+          onClick={logout}
         >
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-x" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
