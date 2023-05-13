@@ -24,6 +24,7 @@ function App() {
         <Routes>
           {/* UNICA RUTA PUBLICA */}
           <Route path='/' element={<Login />} />
+          <Route path='*' element={<h1>NOT FOUND 404</h1> } />
 
           {/* RUTA PROTEGIDA DEL SOCIO */}
           <Route path='/perfil' element={<UsuariosLayout />}>
@@ -35,11 +36,13 @@ function App() {
             <Route index element={<AdminInicio />} />
             <Route path='socios' element={<ListaSocios />} />
             <Route path='scanner-qr' element={<ScannerQR />} />
+          <Route path='*' element={<h1>NOT FOUND 404</h1> } />
           </Route>
 
           {/* Ruta al superAdmin */}
           <Route path='/superadmin' element={<SuperAdminsLayout />}>
             <Route index element={<SuperAdminInicio />} />
+          <Route path='*' element={<h1>NOT FOUND 404</h1> } />
           </Route>
         </Routes>
       </AuthProvider>

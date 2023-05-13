@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import socioAxios from "../../config/axios";
+import Alerta from "../../components/Alerta";
 
 const ListaSocios = () => {
   const [socios, setSocios] = useState([]); //Arreglo original de socios
   const [sociosFiltrados, setSociosFiltrados] = useState([]); //Arreglo secundario, para no modificar el original
+  const [alerta, setAlerta] = useState({});
 
   const navigate = useNavigate();
 
@@ -31,16 +33,20 @@ const ListaSocios = () => {
         setSociosFiltrados(response.data);
       } catch (error) {
         console.log(error);
+        setAlerta({msg:"Fallo en la conexión, intentalo nuevamente",error:true});
+
       }
     };
     obtenerSocios();
   }, [])
 
+  const { msg } = alerta;
+
   return (
     <div className="flex flex-col bg-sbc-login">
       <div className="h-20 bg-login-form shadow-lg items-center flex flex-row mb-4">
         <button
-          className="w-16 h-16 left-2 absolute bg-indigo-600 flex justify-center items-center rounded-full shadow-md"
+          className="w-16 h-16 left-5 absolute bg-sbc-yellow flex justify-center items-center rounded-full shadow-md"
           onClick={handleNavigation}
         >
           <svg
@@ -50,7 +56,7 @@ const ListaSocios = () => {
             height="44"
             viewBox="0 0 24 24"
             strokeWidth="1.5"
-            stroke="#ffbf00"
+            stroke="#000000"
             fill="none"
             strokeLinecap="round"
             strokeLinejoin="round"
@@ -102,6 +108,9 @@ const ListaSocios = () => {
               ))}
           </tbody>
         </table>
+          { msg && 
+              <Alerta  alerta={alerta} 
+          />}
       </div>
     </div>
   );
