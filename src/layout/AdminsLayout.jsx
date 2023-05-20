@@ -4,7 +4,7 @@ import useAuth from '../hooks/useAuth';
 
 const AdminsLayout = () => {
   const { tipoUsuario } = useAuth();
-
+  // console.log("tipoUsuario")
 
   return (
     <>

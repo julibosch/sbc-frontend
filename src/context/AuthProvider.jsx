@@ -5,14 +5,35 @@ import { useNavigate } from 'react-router-dom';
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
-  const [dni, setDni] = useState("");
   const [idUsuario, setIdUsuario] = useState("");
   const [tipoUsuario, setTipoUsuario] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const navigate = useNavigate();
-  console.log(tipoUsuario)
 
+  //Cuando se monta el componente solamente, Verifica si hay datos en el storage y los guarda en los useState
+  useEffect(() => {
+    //Trae los datos del localStorage
+    const storedIdUsuario = localStorage.getItem('idUsuario');
+    const storedTipoUsuario = localStorage.getItem('tipoUsuario');
+    const storedIsLoggedIn = JSON.parse(localStorage.getItem('isLoggedIn'));
+
+    //aca entra cuando recargas la pagina. Si las variables de arriba trajeron algo del localStorage las setea a los UseState.
+    if (storedIsLoggedIn && storedTipoUsuario) {
+      setIdUsuario(storedIdUsuario);
+      setTipoUsuario(storedTipoUsuario);
+      setIsLoggedIn(storedIsLoggedIn);
+    }
+  }, []);
+
+  //Esto sucede cuando se hace el login y se recarga la pagina. Actualiza el local storage.
+  useEffect(() => {
+    localStorage.setItem('idUsuario', idUsuario);
+    localStorage.setItem('tipoUsuario', tipoUsuario);
+    localStorage.setItem('isLoggedIn', JSON.stringify(isLoggedIn));
+  }, [idUsuario, tipoUsuario, isLoggedIn]);
+
+  //Esta funcion se llama desde el componente login cuando se hace el submit
   const login = async (dniParam,apellidoParam) => {
 
     const data = {
@@ -21,15 +42,10 @@ const AuthProvider = ({ children }) => {
       };
 
       try {
-
         const response = await clienteAxios.post('/login', data);
-        setDni(response.data.dni);
         setIdUsuario(response.data._id);
         setTipoUsuario(response.data.tipoUsuario)
-        
         setIsLoggedIn(true);
-
-        
 
       } catch (error) {
         console.log(error)
@@ -40,29 +56,24 @@ const AuthProvider = ({ children }) => {
     setIsLoggedIn(false);
     setIdUsuario('');
     setTipoUsuario("");
-    setDni('');
   };
-  
 
+  //Si el useState isLoggedIn esta en true, navega
   useEffect(() => {
-    if(tipoUsuario === 'admin') {
-      return navigate('/admin')
-    } 
-
-    if(tipoUsuario === "superadmin"){
-      return navigate('/superadmin')
+    if (isLoggedIn) {
+      if (tipoUsuario === 'admin' && location.pathname !== '/admin') {
+        navigate('/admin');
+      } else if (tipoUsuario === 'superadmin') {
+        navigate('/superadmin');
+      } else if (tipoUsuario === 'socio') {
+        navigate(`/perfil/${idUsuario}`);
+      }
     }
-
-    if(tipoUsuario === "socio"){
-      return navigate(`/perfil/${idUsuario}`)
-    };
-    
-  }, [tipoUsuario])
+  }, [isLoggedIn, tipoUsuario]);
 
   return (
     <AuthContext.Provider
       value={{
-        dni,
         idUsuario,
         isLoggedIn,
         tipoUsuario,

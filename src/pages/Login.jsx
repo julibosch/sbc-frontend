@@ -25,17 +25,8 @@ const Login = () => {
 
     //Manda la info al Back
     try {
-      
+      //Esta funcion es llamada desde el context
       login(dni.current.value, apellido.current.value);
-
-      // Se redirecciona dependiendo del tipoUsuario
-      // if (tipoUsuario !== "admin" || tipoUsuario !== "superadmin" || tipoUsuario !== "socio") {
-      //   return setAlerta({
-      //     msg: "Socio no existente",
-      //     error:true
-      //   })
-      // }
-      
 
     } catch (error) {
       return console.log(error)
