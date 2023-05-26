@@ -48,6 +48,8 @@ const AuthProvider = ({ children }) => {
         setIsLoggedIn(true);
 
       } catch (error) {
+        //! No muestra alerta en login porque sale por este catch
+        console.log("1")
         console.log(error)
       }
   }

@@ -8,7 +8,7 @@ const AdminsLayout = () => {
 
   return (
     <>
-      <main className='container mx-auto h-screen bg-sbc-login'>
+      <main className='h-screen bg-sbc-login'>
         {/* SI EN EL OBJETO AUTH HAY UNA PROPIEDAD LLAMADA codigoSocio */}
         {tipoUsuario === "admin" ? <Outlet /> : <Navigate to="/" />}
       </main>

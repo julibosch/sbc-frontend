@@ -18,14 +18,12 @@ const AdminInicio = () => {
     }
   }
 
-  
-
   return (
     <>
       <div className="text-center flex flex-col justify-between h-5/6">
         <div className="py-8 bg-login-form shadow-md w-full">
           <button
-            className="absolute right-4 top-4 shadow-md rounded-full bg-yellow-500"
+            className="text-slate-800 h-14 w-14 absolute right-8 top-8 shadow-md rounded-full bg-yellow-400"
             onClick={logout}
           >
             <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-circle-x" width="55" height="55" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#000000" fill="none" strokeLinecap="round" strokeLinejoin="round">

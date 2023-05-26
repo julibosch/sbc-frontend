@@ -1,15 +1,12 @@
 import { useEffect, useRef, useState, useContext } from 'react';
 import Alerta from '../components/Alerta';
 import AuthContext from '../context/AuthProvider';
-import { useNavigate } from 'react-router-dom';
 import Footer from '../components/Footer';
 
 
 const Login = () => {
   const [alerta, setAlerta] = useState({});
   const { login,tipoUsuario } = useContext(AuthContext);
-
-  const navigate = useNavigate();
 
   const dni = useRef();
 
@@ -29,12 +26,12 @@ const Login = () => {
     //Manda la info al Back
     try {
       //Esta funcion es llamada desde el context
-      login(dni.current.value, apellido.current.value);
+      login(dni.current.value);
 
     } catch (error) {
-      return console.log(error)
+      console.log(error)
       setAlerta({
-        msg: error.response.data.msg,
+        msg: "El socio no existe",
         error: true,
       });
     }
