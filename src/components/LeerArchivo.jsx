@@ -7,7 +7,6 @@ import useAuth from "../hooks/useAuth";
 
 function LeerArchivo() {
   const [socios1, setSocios1] = useState([]);
-  const [socios2, setSocios2] = useState([]);
   const [estadoBoton, setEstadoBoton] = useState(true);
   const [sociosErroneo, setSociosErroneo] = useState([]); //Guarda los socios que tienen mal ingresado el dni, tambien recibe los socios con codigo duplicados del back
   const [alerta, setAlerta] = useState({});
@@ -23,15 +22,12 @@ function LeerArchivo() {
       const workbook = XLSX.read(e.target.result, { type: "binary" });
       const hoja = workbook.Sheets[workbook.SheetNames[0]];
       const datos = XLSX.utils.sheet_to_json(hoja, { header: 1 });
+      console.log(datos)
 
       const nuevosSocios1 = [];
-      const nuevosSocios2 = [];
 
-      //! DUDA SOBRE ESTO, y si son impares que pasa? toma uno demas o uno menos en la division?
-      const primeraMitad = parseInt(datos.length / 2);
-
-      // Recorre los datos de la hoja y crea un objeto para cada socio
-      for (let i = 1; i < primeraMitad; i++) {
+      //! por que arranca en 1?;
+      for (let i = 1; i < datos.length; i++) {
         const [codigo, nombreCompleto, cuotasAdeudadas, dni] = datos[i];
 
         if (!dni) {
@@ -44,31 +40,11 @@ function LeerArchivo() {
           setSociosErroneo((prev) => [...prev, nuevoErroneo]); // agrega un nuevo socio erróneo al arreglo
 
         } else {
-
           nuevosSocios1.push({ codigo, nombreCompleto, cuotasAdeudadas, dni });
         }
       };
 
-      for (let i = primeraMitad; i < datos.length; i++) {
-        const [codigo, nombreCompleto, cuotasAdeudadas, dni] = datos[i];
-
-        if (!dni) {
-
-          const nuevoErroneo = {
-            nombreCompleto,
-            dni
-          }
-
-          setSociosErroneo((prev) => [...prev, nuevoErroneo]); // agrega un nuevo socio erróneo al arreglo
-
-        } else {
-
-          nuevosSocios2.push({ codigo, nombreCompleto, cuotasAdeudadas, dni });
-        }
-      };
-
       setSocios1(nuevosSocios1);
-      setSocios2(nuevosSocios2);
     };
 
     reader.readAsBinaryString(archivo);
@@ -76,25 +52,23 @@ function LeerArchivo() {
   };
 
   const sendData = async (socios) => {
-    try {
       const response = await clienteAxios.post('/admin/cargar-archivo', socios);
-      console.log(response)
       setAlerta({ msg: response.data.msg, error: false }); //Muestra si esta bien  todo los socios o si hay socios bien y mal.
-      setSociosErroneo(response.data.sociosDuplicados); //Guarda los socios con codigo duplicados y se muestra en la vista
-    } catch (error) {
-      console.log(error)
-      setAlerta({ msg: response.data.msg, error: true });
-    }
   };
 
-  const handleSubmitClick = async () => {
+  const handleSubmitForm = async (e) => {
+    e.preventDefault();
     try {
-      const promise1 = sendData(socios1);
-      const promise2 = sendData(socios2);
-      await Promise.all([promise1, promise2]);
+      console.log(socios1)
+       await sendData(socios1);
       console.log('Ambas solicitudes POST se completaron exitosamente');
     } catch (error) {
-      setAlerta({ msg: "Hubo un error, intentalo nuevamente. ", error: true });
+      console.log("1")
+      if (error.response) {
+        const errorMessage = error.response.data.msg;
+        console.log(errorMessage);
+        setAlerta({ msg: errorMessage, error: true });
+      }
     }
   };
 
@@ -137,7 +111,7 @@ function LeerArchivo() {
       }
 
       <div className="w-full mx-auto bg-slate-100 shadow-md my-12 py-8 rounded-md sm:w-11/12">
-        <div className="flex flex-col justify-center items-center">
+        <form onSubmit={handleSubmitForm} encType="multipart/form-data" className="flex flex-col justify-center items-center">
           <input
             type="file"
             accept=".xls"
@@ -147,12 +121,12 @@ function LeerArchivo() {
           <button
             type="submit"
             disabled={estadoBoton}
-            onClick={handleSubmitClick}
+            
             className="disabled:bg-slate-300 disabled:text-slate-500 disabled:cursor-not-allowed disabled:shadow-none bg-indigo-600 text-yellow-400 hover:bg-indigo-500 py-3 my-6 w-6/12 mx-auto rounded-xl transition-all shadow-md"
           >
             IMPORTAR SOCIOS
           </button>
-        </div>
+        </form>
       </div>
       {
         sociosErroneo.length ?
