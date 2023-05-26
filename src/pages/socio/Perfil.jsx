@@ -24,8 +24,7 @@ const Perfil = () => {
       console.log(error)
     }
   }
-
-  obtenerSocio()
+  obtenerSocio();
 
   return (
     <div className="flex flex-col">
@@ -39,7 +38,7 @@ const Perfil = () => {
           className="text-slate-800 h-14 w-14 absolute right-8 rounded-full shadow-md bg-yellow-400"
           onClick={logout}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-circle-x" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-circle-x" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#000000" fill="none" strokeLinecap="round" strokeLinejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <circle cx="12" cy="12" r="10" />
             <path d="M10 10l4 4m0 -4l-4 4" />
@@ -47,7 +46,7 @@ const Perfil = () => {
         </button>
       </div>
 
-      <div className='py-4 md-mb se-qr-mb lg-py lg-qr lg-mb bg-qr w-3/4 mx-auto shadow-md rounded-xl'>
+      <div className='py-4 md-mb se-qr-mb lg-py lg-qr lg-mb bg-qr w-3/4 mx-auto shadow-md rounded-xl lg:w-1/3 lg:-mt-16'>
         <div className="mx-auto w-48 h-48">
           <QRcode value={datosQR} size={200} style={{ width: "100%" }} />
         </div>
@@ -57,8 +56,8 @@ const Perfil = () => {
         </div>
       </div>
       
-      <div className='relative w-4/5 flex flex-row items-center h-14 bg-red-200 mx-auto shadow-md border border-pink-300 mt-8 rounded-full'>
-        <svg className='se-icon' xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-help" width="55" height="55" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="#e74848" stroke-linecap="round" stroke-linejoin="round">
+      <div className='relative w-4/5 flex flex-row items-center h-14 bg-red-200 mx-auto shadow-lg border border-pink-300 mt-8 rounded-full lg:w-1/2'>
+        <svg xmlns="http://www.w3.org/2000/svg" className="se-icon icon icon-tabler icon-tabler-help" width="55" height="55" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#000000" fill="#e74848" strokeLinecap="round" strokeLinejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none" />
           <circle cx="12" cy="12" r="9" />
           <line x1="12" y1="17" x2="12" y2="17.01" />
