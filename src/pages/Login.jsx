@@ -1,18 +1,17 @@
-import { useEffect, useRef, useState } from "react";
-import Alerta from "../components/Alerta";
-import clienteAxios from "../config/axios";
-import useAuth from "../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
-import Footer from "../components/Footer";
+import { useEffect, useRef, useState, useContext } from 'react';
+import Alerta from '../components/Alerta';
+import AuthContext from '../context/AuthProvider';
+import { useNavigate } from 'react-router-dom';
+import Footer from '../components/Footer';
+
 
 const Login = () => {
   const [alerta, setAlerta] = useState({});
+  const { login,tipoUsuario } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
   const dni = useRef();
-
-  const { setAuth } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,39 +28,11 @@ const Login = () => {
 
     //Manda la info al Back
     try {
-      const url = "/login";
-      const data = {
-        dni: dni.current.value,
-      };
+      //Esta funcion es llamada desde el context
+      login(dni.current.value, apellido.current.value);
 
-      // Post al back
-      const response = await clienteAxios.post(url, data);
-
-      // Se destructura la info del socio
-      const tipoUsuario = response.data.tipoUsuario;
-      const id = response.data._id;
-
-      // Se almacena la info en el localStorage
-      const socioData = { tipoUsuario, id };
-      localStorage.setItem("socioData", JSON.stringify(socioData));
-
-      //Actualiza para poder navegar hacia el perfil.
-      setAuth(socioData);
-
-      // Se redirecciona dependiendo del tipoUsuario
-      if (tipoUsuario === "admin") {
-        return navigate("/admin");
-      }
-
-      if (tipoUsuario === "superadmin") {
-        return navigate("/superadmin");
-      }
-
-      if (tipoUsuario === "socio") {
-        return navigate(`/perfil/${id}`);
-      }
     } catch (error) {
-      console.log(error);
+      return console.log(error)
       setAlerta({
         msg: error.response.data.msg,
         error: true,

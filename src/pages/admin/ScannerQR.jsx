@@ -18,7 +18,7 @@ const ScannerQR = () => {
   });
 
   const navigate = useNavigate();
-
+  console.log("1")
   const handleNavigation = () => {
     setPause(true);
     navigate('/admin');

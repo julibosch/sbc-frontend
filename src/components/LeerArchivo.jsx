@@ -10,7 +10,7 @@ function LeerArchivo() {
   const [estadoBoton, setEstadoBoton] = useState(true);
   const [sociosErroneo, setSociosErroneo] = useState([]); //Guarda los socios que tienen mal ingresado el dni, tambien recibe los socios con codigo duplicados del back
   const [alerta, setAlerta] = useState({});
-  const { cerrarSesion } = useAuth();
+  const { logout } = useAuth();
 
   const handleFileUpload = (e) => {
 
@@ -127,6 +127,7 @@ function LeerArchivo() {
             IMPORTAR SOCIOS
           </button>
         </form>
+
       </div>
       {
         sociosErroneo.length ?

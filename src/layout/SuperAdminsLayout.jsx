@@ -3,12 +3,13 @@ import Footer from '../components/Footer';
 import useAuth from '../hooks/useAuth';
 
 const SuperAdminsLayout = () => {
-  const { auth, cargando } = useAuth();
+  const { tipoUsuario } = useAuth();
+  console.log(tipoUsuario)
 
   return (
     <>
       <main className='w-full mx-auto h-screen'>
-        {auth.tipoUsuario === "superadmin" ? <Outlet /> : <Navigate to="/" />}
+        {tipoUsuario === "superadmin" ? <Outlet /> : <Navigate to="/" />}
       </main>
       <Footer />
     </>
