@@ -61,7 +61,7 @@ const AuthProvider = ({ children }) => {
   //Si el useState isLoggedIn esta en true, navega
   useEffect(() => {
     if (isLoggedIn) {
-      if (tipoUsuario === 'admin' && location.pathname !== '/admin') {
+      if (tipoUsuario === 'admin') {
         navigate('/admin');
       } else if (tipoUsuario === 'superadmin') {
         navigate('/superadmin');
