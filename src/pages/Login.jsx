@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useContext } from 'react';
+import { useEffect,useRef, useState, useContext } from 'react';
 import Alerta from '../components/Alerta';
 import AuthContext from '../context/AuthProvider';
 import Footer from '../components/Footer';
@@ -6,12 +6,23 @@ import Footer from '../components/Footer';
 
 const Login = () => {
   const [alerta, setAlerta] = useState({});
-  const { login,tipoUsuario } = useContext(AuthContext);
-
+  const { login,SocioNoExiste } = useContext(AuthContext);
   const dni = useRef();
 
+  //Si el catch del context devuelve un error del que socio no existe , entra aca.
+  useEffect(() => {
+    if (SocioNoExiste) {
+      setAlerta({
+        msg: SocioNoExiste,
+        error: true,
+      });
+    }else {
+      setAlerta({}); // Restablecer la alerta cuando no hay error
+    }
+  }, [SocioNoExiste]);
+
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
 
     //Validacion de Apellido y DNI
     if (dni.current.value === "") {
@@ -21,7 +32,7 @@ const Login = () => {
       });
     }
 
-    setAlerta({});
+    // setAlerta({});
 
     //Manda la info al Back
     try {
@@ -31,7 +42,7 @@ const Login = () => {
     } catch (error) {
       console.log(error)
       setAlerta({
-        msg: "El socio no existe",
+        msg: error.response.data.msg,
         error: true,
       });
     }

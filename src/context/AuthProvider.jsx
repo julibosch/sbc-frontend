@@ -8,6 +8,7 @@ const AuthProvider = ({ children }) => {
   const [idUsuario, setIdUsuario] = useState("");
   const [tipoUsuario, setTipoUsuario] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [SocioNoExiste, setSocioNoExiste] = useState("");
 
   const navigate = useNavigate();
 
@@ -46,14 +47,13 @@ const AuthProvider = ({ children }) => {
         setIdUsuario(response.data._id);
         setTipoUsuario(response.data.tipoUsuario)
         setIsLoggedIn(true);
+        setSocioNoExiste(""); // Restablecer el estado de SocioNoExiste
 
       } catch (error) {
-        //! No muestra alerta en login porque sale por este catch
-        console.log("1")
-        console.log(error)
+        setSocioNoExiste(error.response.data.msg); //El socio no existe
       }
   }
-
+  
   const logout = () => {
     setIsLoggedIn(false);
     setIdUsuario('');
@@ -80,7 +80,8 @@ const AuthProvider = ({ children }) => {
         isLoggedIn,
         tipoUsuario,
         login,
-        logout 
+        logout,
+        SocioNoExiste, 
       }}
     >
       {children}
