@@ -4,12 +4,14 @@ import clienteAxios from "../config/axios";
 import SocioErroneo from "./SocioErroneo";
 import Alerta from "./Alerta";
 import useAuth from "../hooks/useAuth";
+import BounceLoader from "react-spinners/BounceLoader";
 
 function LeerArchivo() {
   const [socios1, setSocios1] = useState([]);
   const [estadoBoton, setEstadoBoton] = useState(true);
   const [sociosErroneo, setSociosErroneo] = useState([]); //Guarda los socios que tienen mal ingresado el dni, tambien recibe los socios con codigo duplicados del back
   const [alerta, setAlerta] = useState({});
+  const [loading, setLoading] = useState(false);
   const { logout } = useAuth();
 
   const handleFileUpload = (e) => {
@@ -48,22 +50,16 @@ function LeerArchivo() {
     };
 
     reader.readAsBinaryString(archivo);
-
-  };
-
-  const sendData = async (socios) => {
-      const response = await clienteAxios.post('/admin/cargar-archivo', socios);
-      setAlerta({ msg: response.data.msg, error: false }); //Muestra si esta bien  todo los socios o si hay socios bien y mal.
   };
 
   const handleSubmitForm = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      console.log(socios1)
-       await sendData(socios1);
-      console.log('Ambas solicitudes POST se completaron exitosamente');
+      const response = await clienteAxios.post('/admin/cargar-archivo', socios1);
+      setAlerta({ msg: response.data.msg, error: false });
+      setLoading(false);
     } catch (error) {
-      console.log("1")
       if (error.response) {
         const errorMessage = error.response.data.msg;
         console.log(errorMessage);
@@ -104,13 +100,23 @@ function LeerArchivo() {
         </button>
       </div>
 
+      <div className="w-full flex justify-center mt-8">
+        <BounceLoader
+          loading={loading}
+          color="#0339A6"
+          size={100}
+          aria-label="Loading Spinner"
+          data-testid="loader"
+        />
+      </div>
+
       {msg &&
         <Alerta
           alerta={alerta}
         />
       }
 
-      <div className="w-full mx-auto bg-slate-100 shadow-md my-12 py-8 rounded-md sm:w-11/12">
+      <div className="w-full mx-auto bg-slate-100 shadow-md my-8 py-8 rounded-md sm:w-11/12">
         <form onSubmit={handleSubmitForm} encType="multipart/form-data" className="flex flex-col justify-center items-center">
           <input
             type="file"
@@ -121,7 +127,7 @@ function LeerArchivo() {
           <button
             type="submit"
             disabled={estadoBoton}
-            
+
             className="disabled:bg-slate-300 disabled:text-slate-500 disabled:cursor-not-allowed disabled:shadow-none bg-indigo-600 text-yellow-400 hover:bg-indigo-500 py-3 my-6 w-6/12 mx-auto rounded-xl transition-all shadow-md"
           >
             IMPORTAR SOCIOS

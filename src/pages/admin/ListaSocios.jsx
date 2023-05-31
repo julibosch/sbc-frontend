@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import socioAxios from "../../config/axios";
 import Alerta from "../../components/Alerta";
+import BounceLoader from "react-spinners/BounceLoader";
 
 const ListaSocios = () => {
   const [socios, setSocios] = useState([]); //Arreglo original de socios
   const [sociosFiltrados, setSociosFiltrados] = useState([]); //Arreglo secundario, para no modificar el original
   const [alerta, setAlerta] = useState({});
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -17,8 +19,8 @@ const ListaSocios = () => {
   const handleChange = (e) => {
     const inputValue = e.target.value;
 
-    const sociosFiltrados = socios.filter(socio => 
-      socio.nombreCompleto.toLowerCase().includes(inputValue.toLowerCase()) || 
+    const sociosFiltrados = socios.filter(socio =>
+      socio.nombreCompleto.toLowerCase().includes(inputValue.toLowerCase()) ||
       socio.dni.toLowerCase().includes(inputValue.toLowerCase())
     );
 
@@ -26,15 +28,16 @@ const ListaSocios = () => {
   }
 
   useEffect(() => {
+    setLoading(true);
     const obtenerSocios = async () => {
       try {
         const response = await socioAxios.get("/admin/socios");
         setSocios(response.data);
         setSociosFiltrados(response.data);
+        setLoading(false);
       } catch (error) {
         console.log(error);
-        setAlerta({msg:"Fallo en la conexión, intentalo nuevamente",error:true});
-
+        setAlerta({ msg: "Fallo en la conexión, intentalo nuevamente", error: true });
       }
     };
     obtenerSocios();
@@ -80,12 +83,12 @@ const ListaSocios = () => {
               <circle cx="10" cy="10" r="7" />
               <line x1="21" y1="21" x2="15" y2="15" />
             </svg>
-            <input 
-              className="text-lg px-2 ml-2 w-10/12 my-0.5 rounded focus:outline-yellow-500 sans-pro" 
-              type="search" 
+            <input
+              className="text-lg px-2 ml-2 w-10/12 my-0.5 rounded focus:outline-yellow-500 sans-pro"
+              type="search"
               placeholder="DNI o Nombre del socio"
               onChange={handleChange}
-              />
+            />
           </div>
         </div>
 
@@ -108,8 +111,17 @@ const ListaSocios = () => {
               ))}
           </tbody>
         </table>
-          { msg && 
-              <Alerta  alerta={alerta} 
+        <div className="w-full flex justify-center mt-8">
+          <BounceLoader
+            loading={loading}
+            color="#F2CB05"
+            size={100}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
+        {msg &&
+          <Alerta alerta={alerta}
           />}
       </div>
     </div>
