@@ -7,13 +7,13 @@ const AdminsLayout = () => {
   // console.log("tipoUsuario")
 
   return (
-    <>
-      <main className='h-screen bg-sbc-login'>
+    <section className='h-screen bg-sbc-login'>
+      <main className='h-[94%]'>
         {/* SI EN EL OBJETO AUTH HAY UNA PROPIEDAD LLAMADA codigoSocio */}
         {tipoUsuario === "admin" ? <Outlet /> : <Navigate to="/" />}
       </main>
       <Footer />
-    </>
+    </section>
   )
 }
 

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import AdminsLayout from './layout/AdminsLayout';
 import UsuariosLayout from './layout/UsuariosLayout';
+import AdminBuffet from './layout/BuffetVentasLayout';
 
 import AdminInicio from './pages/admin/AdminInicio';
 import LeerArchivo from './components/LeerArchivo';
@@ -10,12 +11,12 @@ import ListaSocios from './pages/admin/ListaSocios';
 import Login from './pages/Login';
 import Perfil from './pages/socio/Perfil';
 
-
 import SuperAdminsLayout from './layout/SuperAdminsLayout';
 import SuperAdminInicio from './pages/superAdmin/SuperAdminInicio';
 
 import { AuthProvider } from './context/AuthProvider';
 import ScannerQR from './pages/admin/ScannerQR';
+import Buffet from './pages/admin/Buffet';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
             <Route index element={<AdminInicio />} />
             <Route path='socios' element={<ListaSocios />} />
             <Route path='scanner-qr' element={<ScannerQR />} />
+            <Route path='buffet' element={<Buffet />} />
           <Route path='*' element={<h1>NOT FOUND 404</h1> } />
           </Route>
 
