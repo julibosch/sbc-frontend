@@ -3,10 +3,12 @@ import { useNavigate } from "react-router-dom";
 import Alerta from "../../components/Alerta";
 import BounceLoader from "react-spinners/BounceLoader";
 import { FixedSizeList } from "react-window";
+import { useSocios } from "../../context/SociosProvider";
 
 const ListaSocios = () => {
   const [alerta, setAlerta] = useState({});
   const [loading, setLoading] = useState(false);
+  const { socios, sociosFiltrados, setSociosFiltrados } = useSocios();
 
   const navigate = useNavigate();
 

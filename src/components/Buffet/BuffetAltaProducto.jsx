@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Drawer,
   Button,
@@ -6,74 +6,82 @@ import {
   IconButton,
   Input,
   Select,
-  Option
+  Option,
 } from "@material-tailwind/react";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useProductos } from "../../context/ProductosProvider";
 
 const BuffetAltaProducto = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [nuevoProducto, setNuevoProducto] = useState({
     descripcion: "",
     categoria: "",
-    precio: ""
-  })
+    precio: '',
+  });
+  const { crearProducto, setProductos } = useProductos();
 
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => {
     setNuevoProducto({
       descripcion: "",
       categoria: "",
-      precio: ""
-    })
-    setOpen(false)
+      precio: '',
+    });
+    setOpen(false);
   };
-  const notifySuccess = (descripcion) => toast.success(<span>El producto <span className="underline font-bold">{descripcion}</span> se agregó exitosamente!</span>);
-  const notifyError = () => toast.error("Rellene todos los campos.");
+  const notifySuccess = (descripcion) =>
+    toast.success(
+      <span>
+        El producto <span className="underline font-bold">{descripcion}</span>{" "}
+        se agregó exitosamente!
+      </span>
+    );
+  const notifyError = (mensaje) => toast.error(mensaje);
 
-  const handleSubmit = () => {
-    if (
-      nuevoProducto.descripcion === "" ||
-      nuevoProducto.categoria === "" ||
-      nuevoProducto.precio === 0 ||
-      nuevoProducto.precio === ""
-    ) {
-      notifyError()
-    } else {
-      try {
-        const response = 0
-        notifySuccess(nuevoProducto.descripcion)
-        closeDrawer()
-      } catch (error) {
+  const handleSubmit = async () => {
+    // const precio = Number(nuevoProducto.precio);
+    // setNuevoProducto({...nuevoProducto,  precio: isNaN(precio) ? undefined : Number(precio)})
+    if (nuevoProducto.descripcion === "" || nuevoProducto.categoria === "" || nuevoProducto.precio === "") {
+      return notifyError('Rellene todos los campos.');
+    }
+    if ( nuevoProducto.precio <= 0) {
+      return notifyError('Precio debe ser mayor a cero');
+    }
 
-        notifyError()
-      }
+    try {
+      const respuesta = await crearProducto(nuevoProducto);
+      notifySuccess(respuesta.productoCreado.descripcion);
+      closeDrawer();
+    } catch (error) {
+      console.log(error)
+      notifyError(error.message);
     }
   };
 
   const handleDescripcionChange = (e) => {
     setNuevoProducto({
       ...nuevoProducto,
-      descripcion: e.target.value
+      descripcion: e.target.value,
     });
   };
 
   const handleCategoriaChange = (e) => {
     setNuevoProducto({
       ...nuevoProducto,
-      categoria: e
+      categoria: e,
     });
   };
 
   const handlePrecioChange = (e) => {
     setNuevoProducto({
       ...nuevoProducto,
-      precio: parseFloat(e.target.value)
+      precio: e.target.value,
     });
   };
 
   return (
-    <React.Fragment>
+    <>
       <Button
         className="bg-sbc-blue w-[15%] flex justify-center items-center py-2 px-2"
         onClick={openDrawer}
@@ -96,7 +104,11 @@ const BuffetAltaProducto = () => {
       </Button>
       <Drawer open={open} onClose={closeDrawer}>
         <div className="flex items-center justify-between mt-4 px-4 pb-2">
-          <Typography className="font-bold underline" variant="h5" color="blue-gray">
+          <Typography
+            className="font-bold underline"
+            variant="h5"
+            color="blue-gray"
+          >
             Alta de un Producto
           </Typography>
           <IconButton variant="text" color="blue-gray" onClick={closeDrawer}>
@@ -157,7 +169,7 @@ const BuffetAltaProducto = () => {
       </Drawer>
       <ToastContainer
         position="bottom-center"
-        autoClose={1500}
+        autoClose={2000}
         limit={1}
         hideProgressBar={false}
         newestOnTop={false}
@@ -168,8 +180,8 @@ const BuffetAltaProducto = () => {
         theme="colored"
         transition:Bounce
       />
-    </React.Fragment>
+    </>
   );
 };
 
-export default BuffetAltaProducto
+export default BuffetAltaProducto;

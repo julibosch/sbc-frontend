@@ -1,15 +1,17 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { productosMock } from '../../assets/MOCK_DATA.js'
 import { FixedSizeList } from "react-window";
 import BuffetAltaProducto from './BuffetAltaProducto.jsx';
+import { useProductos } from '../../context/ProductosProvider.jsx';
 
 const BuffetTable = () => {
-  const [productosFiltrados, setProductosFiltrados] = useState(productosMock)
+  const {productosFiltrados, setProductosFiltrados, productos} = useProductos();
+  // const [productosFiltrados, setProductosFiltrados] = useState(productosMock);
 
   const handleChange = (e) => {
     const inputValue = e.target.value;
 
-    const productosFiltradosArr = [...productosMock].filter(producto =>
+    const productosFiltradosArr = [...productos].filter(producto =>
       producto.descripcion.toLowerCase().includes(inputValue.toLowerCase()) || producto.categoria.toLowerCase().includes(inputValue.toLowerCase())
     );
 
@@ -45,7 +47,7 @@ const BuffetTable = () => {
         <ul className="flex flex-col">
           <li className="flex carter bg-yellow-400 text-cta-azul items-center py-3 border-b">
             <p className="w-[35%] pl-2">Descripcion</p>
-            <p className="w-[45%]">Categoria</p>
+            <p className="w-[40%]">Categoria</p>
             <p className="w-[10%]">Precio</p>
           </li>
 
