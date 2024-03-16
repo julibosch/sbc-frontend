@@ -1,8 +1,6 @@
 import {
   Card,
   CardBody,
-  CardHeader,
-  Typography,
 } from "@material-tailwind/react";
 import Chart from "react-apexcharts";
  

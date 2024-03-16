@@ -9,10 +9,9 @@ const Ventas = () => {
     <div className="text-center flex flex-col gap-5 h-full">
       <VentasHeader />
 
-      <div className="flex flex-col gap-3 px-5 ju w-full h-full">
-        <div className='bg-black/60 rounded-xl  overflow-hidden'>
+      <div className="flex flex-col gap-2 px-5 w-full h-full">
+        <div className='bg-black/60 transition-all rounded-xl min-h-[68%] overflow-hidden'>
           <VentasTabsContainer />
-          {/* <VentasBarChart /> */}
         </div>
 
         <div className='flex flex-col h-1/6 justify-evenly gap-2 mt-4'>

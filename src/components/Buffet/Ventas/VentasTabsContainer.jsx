@@ -16,7 +16,7 @@ export function VentasTabsContainer() {
     },
     {
       label: "Pie",
-      value: "pie",
+      value: "asd",
     },
   ];
  
@@ -38,7 +38,7 @@ export function VentasTabsContainer() {
         {data.map(({ value }) => (
           <TabPanel key={value} value={value}>
             { value == "barras" && <VentasBarChart />}
-            { value == "pie" && <VentasPieChart />}
+            { value == "asd" && <VentasPieChart />}
           </TabPanel>
         ))}
       </TabsBody>

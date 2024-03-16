@@ -8,7 +8,7 @@ const chartConfig = {
   type: "pie",
   width: 320,
   height: 320,
-  series: [{desc: "choripan", cant: 44}],
+  series: [40, 130, 120, 100, 60, 65],
   options: {
     chart: {
       toolbar: {
