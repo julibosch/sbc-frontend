@@ -17,6 +17,7 @@ import SuperAdminInicio from './pages/superAdmin/SuperAdminInicio';
 import { AuthProvider } from './context/AuthProvider';
 import ScannerQR from './pages/admin/ScannerQR';
 import Buffet from './pages/admin/Buffet';
+import Ventas from './pages/admin/Ventas';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
             <Route path='socios' element={<ListaSocios />} />
             <Route path='scanner-qr' element={<ScannerQR />} />
             <Route path='buffet' element={<Buffet />} />
+            <Route path='buffet/ventas' element={<Ventas />} />
           <Route path='*' element={<h1>NOT FOUND 404</h1> } />
           </Route>
 

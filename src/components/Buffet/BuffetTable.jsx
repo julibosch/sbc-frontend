@@ -31,9 +31,9 @@ const BuffetTable = () => {
   return (
     <div className='bg-gray-300 h-4/5 rounded-md'>
       <div className="flex flex-col">
-        <div className="flex justify-between gap-2 px-2 py-2 rounded-t-lg bg-blue-gray-400">
+        <div className="flex px-2 py-2 rounded-t-md bg-blue-gray-400">
           <input
-            className="text-base px-2 w-[85%] rounded focus:outline-yellow-500 sans-pro"
+            className="text-base mr-2 px-2 grow rounded focus:outline-light-blue-500 sans-pro"
             type="search"
             placeholder="Descripcion o Categoria"
             onChange={handleChange}
