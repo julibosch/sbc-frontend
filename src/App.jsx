@@ -15,6 +15,7 @@ import SuperAdminsLayout from './layout/SuperAdminsLayout';
 import SuperAdminInicio from './pages/superAdmin/SuperAdminInicio';
 
 import { AuthProvider } from './context/AuthProvider';
+import ProductosProvider from './context/ProductosProvider';
 import ScannerQR from './pages/admin/ScannerQR';
 import Buffet from './pages/admin/Buffet';
 import Ventas from './pages/admin/Ventas';
@@ -23,6 +24,7 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
+      <ProductosProvider>
         <Routes>
           {/* UNICA RUTA PUBLICA */}
           <Route path='/' element={<Login />} />
@@ -49,6 +51,7 @@ function App() {
           <Route path='*' element={<h1>NOT FOUND 404</h1> } />
           </Route>
         </Routes>
+        </ProductosProvider>
       </AuthProvider>
     </BrowserRouter>
   )
