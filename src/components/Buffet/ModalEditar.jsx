@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Drawer,
   Button,
@@ -10,35 +9,27 @@ import {
 } from "@material-tailwind/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useEffect, useState } from "react";
 import { useProductos } from "../../context/ProductosProvider";
 
-const BuffetAltaProducto = () => {
-  const [open, setOpen] = useState(false);
+const ModalEditar = ({productoEditar, setModalEditar, modalEditar}) => {
   const [nuevoProducto, setNuevoProducto] = useState({
-    descripcion: "",
-    categoria: "",
-    precio: '',
+    _id: '',
+    descripcion: '',
+    categoria: '',
+    precio:'',
   });
-  const { crearProducto, setProductos } = useProductos();
+  const { editarProducto } = useProductos();
 
-  const openDrawer = () => setOpen(true);
-  const closeDrawer = () => {
-    setNuevoProducto({
-      descripcion: "",
-      categoria: "",
-      precio: '',
-    });
-    setOpen(false);
-  };
-  const notifySuccess = (descripcion) =>
-    toast.success(
-      <span>
-        El producto <span className="underline font-bold">{descripcion}</span>{" "}
-        se agregó exitosamente!
-      </span>
-    );
-  const notifyError = (mensaje) => toast.error(mensaje);
-
+useEffect(() => {
+  setNuevoProducto({
+    _id: productoEditar?._id ? productoEditar._id : '',
+    descripcion: productoEditar?.descripcion ? productoEditar.descripcion : '',
+    categoria: productoEditar?.categoria ? productoEditar.categoria : '',
+    precio: productoEditar?.precio ? productoEditar.precio : '',
+  })
+}, [productoEditar])
+  
   const handleSubmit = async () => {
     if (nuevoProducto.descripcion === "" || nuevoProducto.categoria === "" || nuevoProducto.precio === "") {
       return notifyError('Rellene todos los campos.');
@@ -46,10 +37,10 @@ const BuffetAltaProducto = () => {
     if ( nuevoProducto.precio <= 0) {
       return notifyError('Precio debe ser mayor a cero');
     }
-
+    
     try {
-      const respuesta = await crearProducto(nuevoProducto);
-      notifySuccess(respuesta.productoCreado.descripcion);
+      const respuesta = await editarProducto(nuevoProducto);
+      notifySuccess(respuesta.productoEditado.descripcion);
       closeDrawer();
     } catch (error) {
       console.log(error)
@@ -57,57 +48,47 @@ const BuffetAltaProducto = () => {
     }
   };
 
+  const notifySuccess = (descripcion) =>
+  toast.success(
+    <span>
+      El producto <span className="underline font-bold">{descripcion}</span>{" "}
+      se agregó exitosamente!
+    </span>
+  );
+  const notifyError = (mensaje) => toast.error(mensaje);
+  
   const handleDescripcionChange = (e) => {
     setNuevoProducto({
       ...nuevoProducto,
       descripcion: e.target.value,
     });
   };
-
+  
   const handleCategoriaChange = (e) => {
     setNuevoProducto({
       ...nuevoProducto,
       categoria: e,
     });
   };
-
+  
   const handlePrecioChange = (e) => {
     setNuevoProducto({
       ...nuevoProducto,
-      precio: e.target.value,
+      precio: Number(e.target.value),
     });
   };
+  
+  const closeDrawer = () => setModalEditar(false);
 
   return (
-    <>
-      <Button
-        className="bg-sbc-blue w-[15%] flex justify-center items-center py-2 px-2"
-        onClick={openDrawer}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="26"
-          height="26"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className="icon icon-tabler icons-tabler-outline icon-tabler-plus"
-        >
-          <path d="M12 5l0 14"></path>
-          <path d="M5 12l14 0"></path>
-        </svg>
-      </Button>
-      <Drawer open={open} onClose={closeDrawer}>
+    <Drawer open={modalEditar} onClose={closeDrawer} >
         <div className="flex items-center justify-between mt-4 px-4 pb-2">
           <Typography
             className="font-bold underline"
             variant="h5"
             color="blue-gray"
           >
-            Alta de un Producto
+            Editar Producto
           </Typography>
           <IconButton variant="text" color="blue-gray" onClick={closeDrawer}>
             <svg
@@ -164,7 +145,6 @@ const BuffetAltaProducto = () => {
             Confirmar
           </Button>
         </form>
-      </Drawer>
       {/* <ToastContainer
         position="bottom-center"
         autoClose={2000}
@@ -176,10 +156,10 @@ const BuffetAltaProducto = () => {
         pauseOnFocusLoss
         draggable
         theme="colored"
-        transition:Bounce
+        pauseOnHover
       /> */}
-    </>
-  );
-};
+      </Drawer>
+  )
+}
 
-export default BuffetAltaProducto;
+export default ModalEditar

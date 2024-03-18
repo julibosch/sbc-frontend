@@ -45,8 +45,9 @@ const ProductosProvider = ({ children }) => {
   
   //!Fijarse como llega el parametro aca.
   const editarProducto = async (producto) => {
+    console.log(producto)
     try {
-      const responseAxios = await clienteAxios.put(`/admin/productos${producto._id}`, producto);
+      const responseAxios = await clienteAxios.put(`/admin/productos/${producto._id}`, producto);
       const { productoEditado, message } = responseAxios.data;
       const productosEditados = productos.map( producto => producto._id == productoEditado._id ? productoEditado : producto);
       setProductos(productosEditados);

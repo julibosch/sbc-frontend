@@ -1,12 +1,14 @@
-import React, { useContext, useState } from 'react'
-import { productosMock } from '../../assets/MOCK_DATA.js'
+import React, { useState } from 'react'
 import { FixedSizeList } from "react-window";
 import BuffetAltaProducto from './BuffetAltaProducto.jsx';
 import { useProductos } from '../../context/ProductosProvider.jsx';
+import ModalEditar from './ModalEditar.jsx';
+import { Tooltip } from "@material-tailwind/react";
 
 const BuffetTable = () => {
   const {productosFiltrados, setProductosFiltrados, productos} = useProductos();
-  // const [productosFiltrados, setProductosFiltrados] = useState(productosMock);
+  const [ productoEditar, setProductoEditar ] = useState(); //Guarda el producto a editar y lo pasa por props al modal
+  const [ modalEditar, setModalEditar ] = useState(false); //Activa el modal para editar un producto
 
   const handleChange = (e) => {
     const inputValue = e.target.value;
@@ -18,17 +20,31 @@ const BuffetTable = () => {
     setProductosFiltrados(productosFiltradosArr);
   }
 
-  const Producto = ({ index, style }) => (
-    <li
-      className="border-y border-blue-gray-800 text-sm flex items-center font-semibold"
-      key={productosFiltrados[index]._id}
-      style={style}
-    >
-      <p className="w-[35%] text-left pl-2">{productosFiltrados[index].descripcion}</p>
-      <p className="w-[40%] text-left pl-2">{productosFiltrados[index].categoria}</p>
-      <p className="w-[15%] text-left pl-2">{productosFiltrados[index].precio}</p>
-    </li>
-  );
+  const Producto = ({ index, style }) => {
+
+    const handleEditar = (producto) => {
+      setProductoEditar(producto);
+      setModalEditar(true);
+    };
+
+    return (
+      <Tooltip content={`Click para editar ${productosFiltrados[index].descripcion}`} animate={{
+        mount: { scale: 1, y: 0 },
+        unmount: { scale: 0, y: 25 },
+      }}>
+        <li
+          className="border-y border-blue-gray-800 text-sm flex items-center font-semibold hover:bg-blue-gray-300 transition-all"
+          key={productosFiltrados[index]._id}
+          style={style}
+          onClick={() => handleEditar(productosFiltrados[index])}
+        >
+          <p className="w-[35%] text-left pl-2">{productosFiltrados[index].descripcion}</p>
+          <p className="w-[40%] text-left pl-2">{productosFiltrados[index].categoria}</p>
+          <p className="w-[15%] text-left pl-2">{productosFiltrados[index].precio}</p>
+        </li>
+      </Tooltip>
+    );
+  };
 
   return (
     <div className='bg-gray-300 h-4/5 rounded-md'>
@@ -75,6 +91,9 @@ const BuffetTable = () => {
             </li>
           )}
         </ul>
+      {
+        <ModalEditar productoEditar={productoEditar} setModalEditar={setModalEditar} modalEditar={modalEditar}/>
+      }
       </div>
     </div>
   )

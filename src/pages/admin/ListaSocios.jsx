@@ -4,6 +4,7 @@ import Alerta from "../../components/Alerta";
 import BounceLoader from "react-spinners/BounceLoader";
 import { FixedSizeList } from "react-window";
 import { useSocios } from "../../context/SociosProvider";
+import FiltroSocios from "../../components/FiltroSocios";
 
 const ListaSocios = () => {
   const [alerta, setAlerta] = useState({});
@@ -11,17 +12,6 @@ const ListaSocios = () => {
   const { socios, sociosFiltrados, setSociosFiltrados } = useSocios();
 
   const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    const inputValue = e.target.value;
-
-    const sociosFiltrados = [...socios].filter(socio =>
-      socio.nombreCompleto.toLowerCase().includes(inputValue.toLowerCase()) ||
-      socio.dni.toLowerCase().includes(inputValue.toLowerCase())
-    );
-
-    setSociosFiltrados(sociosFiltrados);
-  }
 
   const Socio = ({ index, style }) => (
     <li
@@ -66,21 +56,7 @@ const ListaSocios = () => {
       </div>
 
       <div className="w-11/12 mx-auto flex flex-col mt-3">
-        <div className="bg-blue-gray-200 rounded-t-lg">
-          <div className="flex flex-row p-2">
-            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-search" width="35" height="35" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#000000" fill="none" strokeLinecap="round" strokeLinejoin="round">
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <circle cx="10" cy="10" r="7" />
-              <line x1="21" y1="21" x2="15" y2="15" />
-            </svg>
-            <input
-              className="text-lg px-2 ml-2 w-10/12 my-0.5 rounded focus:outline-yellow-500 sans-pro"
-              type="search"
-              placeholder="DNI o Nombre del socio"
-              onChange={handleChange}
-            />
-          </div>
-        </div>
+       <FiltroSocios setSociosFiltrados={setSociosFiltrados} socios={socios}/>
 
         <ul className="flex flex-col">
           <li className="flex carter bg-yellow-400 text-cta-azul items-center py-3 border-b">
@@ -99,7 +75,7 @@ const ListaSocios = () => {
             >
               {Socio}
             </FixedSizeList>
-          ) : sociosFiltrados.length > 0 ? (
+          ) : sociosFiltrados.length == 0 ? (
             <li className="bg-red-200">
               <p className="px-6 py-4 text font-semibold text-gray-900 whitespace-nowrap">
                 No existe el socio con la búsqueda utilizada
