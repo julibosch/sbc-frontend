@@ -33,7 +33,7 @@ const BuffetTable = () => {
         unmount: { scale: 0, y: 25 },
       }}>
         <li
-          className="border-y border-blue-gray-800 text-sm flex items-center font-semibold hover:bg-blue-gray-300 transition-all"
+          className="border-y border-blue-gray-800 text-sm flex items-center font-semibold hover:bg-blue-gray-300 transition-all cursor-pointer"
           key={productosFiltrados[index]._id}
           style={style}
           onClick={() => handleEditar(productosFiltrados[index])}

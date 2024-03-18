@@ -4,7 +4,6 @@ import useAuth from '../hooks/useAuth';
 
 const AdminsLayout = () => {
   const { tipoUsuario } = useAuth();
-  // console.log("tipoUsuario")
 
   return (
     <section className='h-screen bg-sbc-login'>

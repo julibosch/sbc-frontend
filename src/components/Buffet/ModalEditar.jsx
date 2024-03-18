@@ -109,7 +109,7 @@ useEffect(() => {
         </div>
         <div className="mb-5 px-4">
           <Typography variant="small" color="gray" className="font-normal ">
-            Agregue los campos del producto y luego presione en CONFIRMAR
+            Edite los campos del producto y luego presione en CONFIRMAR
           </Typography>
         </div>
         <form className="flex flex-col gap-6 p-4">

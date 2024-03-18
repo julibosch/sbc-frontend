@@ -1,11 +1,7 @@
-import { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import socioAxios from "../../config/axios";
 
 const AdminInicio = () => {
-  const [socios, setSocios] = useState([]); //Arreglo original de socios
-  const [sociosFiltrados, setSociosFiltrados] = useState([]); //Arreglo secundario, para no modificar el original
 
   const navigate = useNavigate();
   const { logout } = useAuth();
@@ -19,22 +15,10 @@ const AdminInicio = () => {
       navigate('/admin/scanner-qr')
     } else if (target === "Buffet") {
       navigate('/admin/buffet')
+    }else if (target === "Ventas") {
+      navigate('/admin/ventas')
     }
   }
-
-  useEffect(() => {
-    const obtenerSocios = async () => {
-      try {
-        const response = await socioAxios.get("/admin/socios");
-        setSocios(response.data);
-        setSociosFiltrados(response.data);
-      } catch (error) {
-        console.log(error);
-        // setAlerta({ msg: "Fallo en la conexión, intentalo nuevamente", error: true });
-      }
-    };
-    obtenerSocios();
-  }, [])
 
   return (
     <div className="text-center flex flex-col justify-between h-full">
@@ -72,6 +56,12 @@ const AdminInicio = () => {
           onClick={handleClick}
         >
           Buffet
+        </button>
+        <button
+          className="rounded-full py-4 bg-sbc-yellow text-cta-azul sans-pro text-2xl font-bold shadow-md uppercase w-3/4 mx-auto"
+          onClick={handleClick}
+        >
+          Ventas
         </button>
       </div>
 
