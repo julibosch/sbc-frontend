@@ -11,7 +11,7 @@ const AdminsLayout = () => {
         {/* SI EN EL OBJETO AUTH HAY UNA PROPIEDAD LLAMADA codigoSocio */}
         {tipoUsuario === "admin" ? <Outlet /> : <Navigate to="/" />}
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </section>
   )
 }
