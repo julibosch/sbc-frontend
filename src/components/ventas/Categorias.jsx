@@ -12,7 +12,7 @@ const Categorias = ({ setProductosPorCategoria, productos, setMostrarDiv }) => {
   };
 
   return (
-    <div className="h-full flex flex-col justify-center items-center gap-6">
+    <div className="h-full flex flex-col justify-center items-center mt-4 gap-6">
       {categorias.map((categoria) => (
         <button
           key={categoria}
