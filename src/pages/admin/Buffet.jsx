@@ -1,11 +1,10 @@
 import { ToastContainer } from "react-toastify"
 import BuffetHeader from "../../components/Buffet/BuffetHeader"
 import BuffetTable from "../../components/Buffet/BuffetTable"
-import { Link } from 'react-router-dom'
 
 const Buffet = () => {
   return (
-    <div className='flex flex-col h-full'>
+    <div className='flex flex-col gap-4 h-full'>
       <BuffetHeader />
       <div className="justify-evenly flex flex-col px-5 ju w-full h-full">
         <BuffetTable />

@@ -10,7 +10,7 @@ const FooterVentas = ({ mostrarDiv, setMostrarDiv }) => {
     <footer className="flex w-4/5 justify-center gap-2">
       {mostrarDiv && (
         <Button
-         color="red" 
+         color="red"
          className="w-full text-base uppercase"
          onClick={handleRegresar}
          >

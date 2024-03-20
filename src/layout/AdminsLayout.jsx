@@ -6,8 +6,8 @@ const AdminsLayout = () => {
   const { tipoUsuario } = useAuth();
 
   return (
-    <section className='h-screen bg-sbc-login'>
-      <main className='h-[94%]'>
+    <section className='min-h-screen bg-sbc-login'>
+      <main className='min-h-full'>
         {/* SI EN EL OBJETO AUTH HAY UNA PROPIEDAD LLAMADA codigoSocio */}
         {tipoUsuario === "admin" ? <Outlet /> : <Navigate to="/" />}
       </main>

@@ -3,8 +3,8 @@ import FooterVentas from "./FooterVentas";
 
 const DetalleVenta = ({ mostrarDiv, setMostrarDiv }) => {
   return (
-    <article className="h-1/2 w-full flex flex-col justify-center items-center gap-3 overflow-hidden">
-      <div className="w-4/5 h-4/5 rounded-lg bg-blue-gray-100">
+    <article className="h-full min-h-[50vh] marker:scroll w-full flex flex-col justify-center items-center gap-3">
+      <div className="w-4/5 h-4/5 p-2 rounded-lg bg-blue-gray-100">
         <p className="py-2">Detalle</p>
         <hr className="bg-black w-full mb-1" />
         <ul className="flex flex-col">
@@ -16,6 +16,15 @@ const DetalleVenta = ({ mostrarDiv, setMostrarDiv }) => {
           </li>
           <li className="flex flex-row justify-between mx-2">
             <span>x1</span> <p>Coca cola grande</p> <span>$1500</span>
+          </li>
+          <li className="flex flex-row justify-between mx-2">
+            <span>x1</span> <p>Coca cola grande</p> <span>$1500</span>
+          </li>
+          <li className="flex flex-row justify-between mx-2">
+            <span>x1</span> <p>Coca cola grande</p> <span>$1500</span>
+          </li>
+          <li className="flex flex-row justify-between mx-2">
+            <span>x1</span> <p>Sandwich de milanesa</p> <span>$1500</span>
           </li>
         </ul>
       </div>

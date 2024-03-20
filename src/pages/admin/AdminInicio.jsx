@@ -21,7 +21,7 @@ const AdminInicio = () => {
   }
 
   return (
-    <div className="text-center flex flex-col justify-between h-full">
+    <div className="text-center flex flex-col justify-between h-screen">
       <div className="py-6 bg-login-form shadow-md w-full">
         <button
           className="h-14 w-14 absolute right-3 top-3 shadow-md rounded-full bg-yellow-500"
@@ -36,7 +36,7 @@ const AdminInicio = () => {
         <p className="text-4xl text-blue-gray-100 carter px-6">Panel de Administrador</p>
       </div>
 
-      <div className="flex flex-col gap-6">
+      <div className="h-full flex flex-col justify-center items-center gap-6">
         <button
           className="rounded-full py-4 bg-sbc-yellow text-cta-azul sans-pro text-2xl font-bold shadow-md uppercase w-3/4 mx-auto"
           onClick={handleClick}
