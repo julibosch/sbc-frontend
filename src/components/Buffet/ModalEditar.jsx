@@ -30,6 +30,14 @@ useEffect(() => {
   })
 }, [productoEditar])
   
+const notifySuccess = (descripcion) =>
+toast.success(
+  <span>
+    El producto se edito exitosamente a <span className="underline font-bold">{descripcion}</span>!
+  </span>
+);
+const notifyError = (mensaje) => toast.error(mensaje);
+
   const handleSubmit = async () => {
     if (nuevoProducto.descripcion === "" || nuevoProducto.categoria === "" || nuevoProducto.precio === "") {
       return notifyError('Rellene todos los campos.');
@@ -47,15 +55,6 @@ useEffect(() => {
       notifyError(error.message);
     }
   };
-
-  const notifySuccess = (descripcion) =>
-  toast.success(
-    <span>
-      El producto <span className="underline font-bold">{descripcion}</span>{" "}
-      se agregó exitosamente!
-    </span>
-  );
-  const notifyError = (mensaje) => toast.error(mensaje);
   
   const handleDescripcionChange = (e) => {
     setNuevoProducto({

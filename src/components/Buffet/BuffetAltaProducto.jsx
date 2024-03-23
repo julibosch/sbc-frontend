@@ -165,19 +165,6 @@ const BuffetAltaProducto = () => {
           </Button>
         </form>
       </Drawer>
-      {/* <ToastContainer
-        position="bottom-center"
-        autoClose={2000}
-        limit={1}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        theme="colored"
-        transition:Bounce
-      /> */}
     </>
   );
 };

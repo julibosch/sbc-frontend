@@ -1,15 +1,15 @@
-import { ToastContainer } from "react-toastify"
-import BuffetHeader from "../../components/Buffet/BuffetHeader"
-import BuffetTable from "../../components/Buffet/BuffetTable"
+import { ToastContainer } from "react-toastify";
+import BuffetHeader from "../../components/Buffet/BuffetHeader";
+import BuffetTable from "../../components/Buffet/BuffetTable";
 
 const Buffet = () => {
   return (
-    <div className='flex flex-col gap-4 h-full'>
+    <div className="flex flex-col gap-4 h-full">
       <BuffetHeader />
       <div className="justify-evenly flex flex-col px-5 ju w-full h-full">
         <BuffetTable />
       </div>
-        <ToastContainer
+      <ToastContainer
         position="bottom-center"
         autoClose={2000}
         limit={1}
@@ -23,7 +23,7 @@ const Buffet = () => {
         pauseOnHover
       />
     </div>
-  )
-}
+  );
+};
 
-export default Buffet
+export default Buffet;

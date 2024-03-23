@@ -1,35 +1,64 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import FooterVentas from "./FooterVentas";
+import { useAutoAnimate } from '@formkit/auto-animate/react'
 
-const DetalleVenta = ({ mostrarDiv, setMostrarDiv }) => {
+const DetalleVenta = ({ mostrarDiv, setMostrarDiv, productosVenta, setProductosVenta }) => {
+  const [precioTotal, setPrecioTotal] = useState(0);
+  const [parent] = useAutoAnimate();
+
+  useEffect(() => {
+    let sumarPrecioTotal = 0;
+
+    if (productosVenta.length > 0) {
+
+      [...productosVenta].forEach(producto => {
+        sumarPrecioTotal += producto.cantidad*producto.precioUnitario
+      })
+
+      setPrecioTotal(sumarPrecioTotal);
+    } else {
+      setPrecioTotal(0);
+    }
+  }, [productosVenta])
+  
   return (
-    <article className="h-full min-h-[50vh] marker:scroll w-full flex flex-col justify-center items-center gap-3">
-      <div className="w-4/5 h-4/5 p-2 rounded-lg bg-blue-gray-100">
-        <p className="py-2">Detalle</p>
-        <hr className="bg-black w-full mb-1" />
-        <ul className="flex flex-col">
-          <li className="flex flex-row justify-between mx-2">
-            <span>x2</span> <p>Choripan</p> <span>$1500</span>
-          </li>
-          <li className="flex flex-row justify-between mx-2">
-            <span>x3</span> <p>Hamburguesa</p> <span>$1500</span>
-          </li>
-          <li className="flex flex-row justify-between mx-2">
-            <span>x1</span> <p>Coca cola grande</p> <span>$1500</span>
-          </li>
-          <li className="flex flex-row justify-between mx-2">
-            <span>x1</span> <p>Coca cola grande</p> <span>$1500</span>
-          </li>
-          <li className="flex flex-row justify-between mx-2">
-            <span>x1</span> <p>Coca cola grande</p> <span>$1500</span>
-          </li>
-          <li className="flex flex-row justify-between mx-2">
-            <span>x1</span> <p>Sandwich de milanesa</p> <span>$1500</span>
-          </li>
+    <article className="h-full min-h-[30vh] marker:scroll w-full flex flex-col justify-center items-center gap-3">
+      <div className="w-4/5 h-4/5 p-2 rounded-lg bg-blue-gray-100 sans-pro">
+        <p className="font-black uppercase text-sm">Detalle</p>
+        <hr className="bg-black w-full my-2" />
+        <ul ref={parent} className="flex flex-col">
+          {productosVenta.length ? (
+            productosVenta.map((producto) => (
+              <li key={producto._id} className="mx-2">
+                <p className="flex justify-between w-full uppercase text-sm">
+                  <span>x{producto.cantidad}</span>
+                  <span className="px-3 grow text-left">
+                    {producto.descripcion}
+                  </span>
+                  <span>${producto.precioUnitario}</span>
+                </p>
+              </li>
+            ))
+          ) : (
+            <li>
+              <p>Ingrese productos</p>
+            </li>
+          )}
         </ul>
+        <hr className="bg-black w-full my-2" />
+        <p className="px-2 font-bold flex justify-between w-full uppercase text-sm">
+          <span>Total:</span>
+          <span>${precioTotal}</span>
+        </p>
       </div>
       {/* BOTONES */}
-      <FooterVentas mostrarDiv={mostrarDiv} setMostrarDiv={setMostrarDiv} />
+      <FooterVentas 
+      mostrarDiv={mostrarDiv} 
+      setMostrarDiv={setMostrarDiv} 
+      precioTotal={precioTotal}
+      setProductosVenta={setProductosVenta}
+      productosVenta={productosVenta}
+      />
     </article>
   );
 };

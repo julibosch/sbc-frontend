@@ -9,6 +9,7 @@ import ProductosVenta from "../../components/ventas/ProductosVenta";
 const Ventas = () => {
   const [productosPorCategoria, setProductosPorCategoria] = useState([]); //Contiene los productos al seleccionar una categoria
   const [mostrarDiv, setMostrarDiv] = useState(false); //Div que renderiza los productos al seleccionar una categoria
+  const [productosVenta, setProductosVenta] = useState([]);
   const { productos } = useProductos();
   const navigate = useNavigate();
 
@@ -35,7 +36,7 @@ const Ventas = () => {
       </div>
       {/* Article de Categorias */}
       {!mostrarDiv ? (
-        <article className="h-1/2">
+        <article className="h-1/2 pb-5 mb-[10%]">
           <Categorias
             setProductosPorCategoria={setProductosPorCategoria}
             productos={productos}
@@ -43,10 +44,19 @@ const Ventas = () => {
           />
         </article>
       ) : (
-        <ProductosVenta productosPorCategoria={productosPorCategoria} />
+        <ProductosVenta 
+        productosPorCategoria={productosPorCategoria} 
+        productosVenta={productosVenta}
+        setProductosVenta={setProductosVenta}
+        />
       )}
       {/* Article de detalle de productos seleccionado */}
-      <DetalleVenta mostrarDiv={mostrarDiv} setMostrarDiv={setMostrarDiv} />
+      <DetalleVenta 
+      mostrarDiv={mostrarDiv} 
+      setMostrarDiv={setMostrarDiv} 
+      productosVenta={productosVenta}
+      setProductosVenta={setProductosVenta}
+      />
     </section>
   );
 };
