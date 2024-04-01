@@ -48,7 +48,10 @@ const DetalleVenta = ({ mostrarDiv, setMostrarDiv, productosVenta, setProductosV
         <hr className="bg-black w-full my-2" />
         <p className="px-2 font-bold flex justify-between w-full uppercase text-sm">
           <span>Total:</span>
-          <span>${precioTotal}</span>
+          <span>{precioTotal.toLocaleString("es-AR", {
+            style: "currency",
+            currency: "ARS",
+          })}</span>
         </p>
       </div>
       {/* BOTONES */}

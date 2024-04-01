@@ -1,6 +1,8 @@
 import { Button } from "@material-tailwind/react";
 import socioAxios from "../../config/axios";
 import { useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const FooterVentas = ({
   mostrarDiv,
@@ -11,6 +13,12 @@ const FooterVentas = ({
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
+  const notifySuccess = (mensaje) =>
+    toast.success(
+      mensaje
+    );
+  const notifyError = (mensaje) => toast.error(mensaje);
+
   const handleRegresar = () => {
     setMostrarDiv(false);
   };
@@ -18,16 +26,22 @@ const FooterVentas = ({
   const handleConfirmarVenta = async () => {
     setIsLoading(true);
     try {
+
       const responseVenta = await socioAxios.post("/admin/ventas", {
         productos: productosVenta,
         precioTotal,
       });
-      console.log(responseVenta);
+      notifySuccess(responseVenta.data.message);
+      if (responseVenta) {
+        const url = import.meta.env.VITE_BACKEND_PHP;
+        const respuestaTicket = await axios.post(url, {productos: productosVenta, precioTotal});
+      }
 
       setProductosVenta([]);
       setIsLoading(false);
     } catch (error) {
-      console.log(error);
+      console.log(error)
+      notifyError("Hubo un error, revise la Ticketera o el Wifi");
       setIsLoading(false);
     }
   };

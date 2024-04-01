@@ -8,7 +8,7 @@ import {
   Select,
   Option,
 } from "@material-tailwind/react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useProductos } from "../../context/ProductosProvider";
 

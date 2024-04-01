@@ -1,7 +1,5 @@
 import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
-import React, { useRef } from 'react';
-import { useReactToPrint } from 'react-to-print';
 
 const AdminInicio = () => {
   const navigate = useNavigate();
