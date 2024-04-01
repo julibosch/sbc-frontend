@@ -3,10 +3,9 @@ import Alerta from '../components/Alerta';
 import AuthContext from '../context/AuthProvider';
 import Footer from '../components/Footer';
 
-
 const Login = () => {
   const [alerta, setAlerta] = useState({});
-  const { login,SocioNoExiste } = useContext(AuthContext);
+  const { login, SocioNoExiste } = useContext(AuthContext);
   const dni = useRef();
 
   //Si el catch del context devuelve un error del que socio no existe , entra aca.
@@ -77,7 +76,7 @@ const Login = () => {
         >
           <div className="mb-6">
             <label
-              className="sans-pro block text-slate-100 font-normal text-lg"
+              className="sans-pro block text-blue-gray-100 font-semibold text-lg"
               htmlFor="dni"
             >
               DNI

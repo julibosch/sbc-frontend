@@ -35,25 +35,24 @@ const AuthProvider = ({ children }) => {
   }, [idUsuario, tipoUsuario, isLoggedIn]);
 
   //Esta funcion se llama desde el componente login cuando se hace el submit
-  const login = async (dniParam,apellidoParam) => {
+  const login = async (dniParam, apellidoParam) => {
 
     const data = {
-        apellido: apellidoParam,
-        dni: dniParam
-      };
+      apellido: apellidoParam,
+      dni: dniParam
+    };
 
-      try {
-        const response = await clienteAxios.post('/login', data);
-        setIdUsuario(response.data._id);
-        setTipoUsuario(response.data.tipoUsuario)
-        setIsLoggedIn(true);
-        setSocioNoExiste(""); // Restablecer el estado de SocioNoExiste
-
-      } catch (error) {
-        setSocioNoExiste(error.response.data.msg); //El socio no existe
-      }
+    try {
+      const response = await clienteAxios.post('/login', data);
+      setIdUsuario(response.data._id);
+      setTipoUsuario(response.data.tipoUsuario)
+      setIsLoggedIn(true);
+      setSocioNoExiste(""); // Restablecer el estado de SocioNoExiste
+    } catch (error) {
+      setSocioNoExiste(error.response.data.msg); //El socio no existe
+    }
   }
-  
+
   const logout = () => {
     setIsLoggedIn(false);
     setIdUsuario('');
@@ -81,7 +80,7 @@ const AuthProvider = ({ children }) => {
         tipoUsuario,
         login,
         logout,
-        SocioNoExiste, 
+        SocioNoExiste,
       }}
     >
       {children}

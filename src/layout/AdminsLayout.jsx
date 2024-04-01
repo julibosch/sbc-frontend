@@ -4,16 +4,14 @@ import useAuth from '../hooks/useAuth';
 
 const AdminsLayout = () => {
   const { tipoUsuario } = useAuth();
-  // console.log("tipoUsuario")
 
   return (
-    <>
-      <main className='h-screen bg-sbc-login'>
+    <section className='min-h-screen bg-sbc-login'>
+      <main className='min-h-full'>
         {/* SI EN EL OBJETO AUTH HAY UNA PROPIEDAD LLAMADA codigoSocio */}
         {tipoUsuario === "admin" ? <Outlet /> : <Navigate to="/" />}
       </main>
-      <Footer />
-    </>
+    </section>
   )
 }
 

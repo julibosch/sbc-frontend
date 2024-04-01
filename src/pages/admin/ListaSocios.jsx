@@ -1,56 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import socioAxios from "../../config/axios";
 import Alerta from "../../components/Alerta";
 import BounceLoader from "react-spinners/BounceLoader";
+import { FixedSizeList } from "react-window";
+import { useSocios } from "../../context/SociosProvider";
+import FiltroSocios from "../../components/FiltroSocios";
 
 const ListaSocios = () => {
-  const [socios, setSocios] = useState([]); //Arreglo original de socios
-  const [sociosFiltrados, setSociosFiltrados] = useState([]); //Arreglo secundario, para no modificar el original
   const [alerta, setAlerta] = useState({});
   const [loading, setLoading] = useState(false);
+  const { socios, sociosFiltrados, setSociosFiltrados } = useSocios();
 
   const navigate = useNavigate();
 
-  const handleNavigation = () => {
-    navigate("/admin");
-  };
-
-  const handleChange = (e) => {
-    const inputValue = e.target.value;
-
-    const sociosFiltrados = socios.filter(socio =>
-      socio.nombreCompleto.toLowerCase().includes(inputValue.toLowerCase()) ||
-      socio.dni.toLowerCase().includes(inputValue.toLowerCase())
-    );
-
-    setSociosFiltrados(sociosFiltrados);
-  }
-
-  useEffect(() => {
-    setLoading(true);
-    const obtenerSocios = async () => {
-      try {
-        const response = await socioAxios.get("/admin/socios");
-        setSocios(response.data);
-        setSociosFiltrados(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.log(error);
-        setAlerta({ msg: "Fallo en la conexión, intentalo nuevamente", error: true });
-      }
-    };
-    obtenerSocios();
-  }, [])
+  const Socio = ({ index, style }) => (
+    <li
+      className={`${sociosFiltrados[index].cuotasAdeudadas < 3 ? "bg-green-400" : "bg-red-400"} border-y border-blue-gray-800 text-sm flex items-center font-semibold`}
+      key={sociosFiltrados[index]._id}
+      style={style}
+    >
+      <p className="w-[25%] text-left pl-2">{sociosFiltrados[index].dni}</p>
+      <p className="w-[55%] text-left">{sociosFiltrados[index].nombreCompleto}</p>
+      <p className="w-[20%] text-center font-bold text-lg">{sociosFiltrados[index].cuotasAdeudadas}</p>
+    </li>
+  );
 
   const { msg } = alerta;
 
   return (
-    <div className="flex flex-col bg-sbc-login">
-      <div className="h-20 bg-login-form shadow-lg items-center flex flex-row mb-4">
+    <div className="flex flex-col h-full">
+      <div className="py-6 bg-login-form shadow-md w-full">
         <button
-          className="w-16 h-16 left-5 absolute bg-sbc-yellow flex justify-center items-center rounded-full shadow-md"
-          onClick={handleNavigation}
+          className="w-14 h-14 left-3 top-3 absolute bg-sbc-yellow flex justify-center items-center rounded-full shadow-md"
+          onClick={() => navigate('/admin')}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -70,59 +52,57 @@ const ListaSocios = () => {
             <line x1="5" y1="12" x2="11" y2="6" />
           </svg>
         </button>
-        <div className="w-full flex justify-center items-center">
-          <p className="text-3xl text-slate-200 carter">Lista de Socios</p>
-        </div>
+        <p className="text-center text-3xl text-blue-gray-50 carter">Lista de Socios</p>
       </div>
 
-      <div className="w-11/12 mx-auto flex flex-col">
-        <div className="bg-slate-300 rounded-t-lg">
-          <div className="flex flex-row p-2">
-            <svg xmlns="http://www.w3.org/2000/svg" className="icon icon-tabler icon-tabler-search" width="35" height="35" viewBox="0 0 24 24" strokeWidth="1.5" stroke="#000000" fill="none" strokeLinecap="round" strokeLinejoin="round">
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <circle cx="10" cy="10" r="7" />
-              <line x1="21" y1="21" x2="15" y2="15" />
-            </svg>
-            <input
-              className="text-lg px-2 ml-2 w-10/12 my-0.5 rounded focus:outline-yellow-500 sans-pro"
-              type="search"
-              placeholder="DNI o Nombre del socio"
-              onChange={handleChange}
-            />
-          </div>
-        </div>
+      <div className="w-11/12 mx-auto flex flex-col mt-3">
+       <FiltroSocios setSociosFiltrados={setSociosFiltrados} socios={socios}/>
 
-        <table className="table-auto shadow-lg border w-full">
-          <thead className="carter bg-yellow-400 text-cta-azul">
-            <tr className="h-12">
-              <th className="text-left pl-3">DNI</th>
-              <th className="text-left pl-3">Nombre Completo</th>
-              <th className="px-2">Cuotas</th>
-            </tr>
-          </thead>
-          <tbody className="sans-pro ">
-            {sociosFiltrados &&
-              sociosFiltrados.map((socio, index) => (
-                <tr className={`${socio.cuotasAdeudadas < 3 ? "bg-green-400" : "bg-red-400"} border-y border-slate-700 h-12 font-semibold`} key={index}>
-                  <td className="pl-3">{socio.dni}</td>
-                  <td className="pl-3">{socio.nombreCompleto}</td>
-                  <td className="text-center font-extrabold text-xl">{socio.cuotasAdeudadas}</td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
-        <div className="w-full flex justify-center mt-8">
+        <ul className="flex flex-col">
+          <li className="flex carter bg-yellow-400 text-cta-azul items-center py-3 border-b">
+            <p className="w-[25%] pl-2">DNI</p>
+            <p className="w-[55%]">Nombre Completo</p>
+            <p className="w-[10%]">Cuotas</p>
+          </li>
+
+          {sociosFiltrados.length > 0 ? (
+            <FixedSizeList
+              className="mx-auto overflow-x-scroll rounded-lg"
+              width={"100%"}
+              height={410}
+              itemCount={sociosFiltrados.length}
+              itemSize={45}
+            >
+              {Socio}
+            </FixedSizeList>
+          ) : sociosFiltrados.length == 0 ? (
+            <li className="bg-red-200">
+              <p className="px-6 py-4 text font-semibold text-gray-900 whitespace-nowrap">
+                No existe el socio con la búsqueda utilizada
+              </p>
+            </li>
+          ) : (
+            <li className="bg-red-200">
+              <p className="px-6 py-4 text-sm font-semibold text-gray-900 whitespace-nowrap">
+                No hay ningún socio, cargue uno
+              </p>
+            </li>
+          )}
+        </ul>
+        {loading &&
           <BounceLoader
+            className="mx-auto"
             loading={loading}
             color="#F2CB05"
             size={100}
             aria-label="Loading Spinner"
             data-testid="loader"
           />
-        </div>
+        }
+
         {msg &&
-          <Alerta alerta={alerta}
-          />}
+          <Alerta alerta={alerta} />
+        }
       </div>
     </div>
   );

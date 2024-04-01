@@ -4,7 +4,7 @@ const Footer = () => {
 
   return (
     <footer
-      className='w-full fixed bottom-0 flex flex-row justify-center items-center bg-zinc-900'
+      className='w-full border-0 absolute left-0 bottom-0 flex flex-row justify-center items-center bg-gray-900'
     >
       <p className='text-md text-yellow-200'>Derechos Reservados &copy; StarkTwo {actualYear}</p>
       <a

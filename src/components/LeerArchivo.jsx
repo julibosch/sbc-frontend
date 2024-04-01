@@ -28,7 +28,6 @@ function LeerArchivo() {
 
       const nuevosSocios1 = [];
 
-      //! por que arranca en 1?;
       for (let i = 1; i < datos.length; i++) {
         const [codigo, nombreCompleto, cuotasAdeudadas, dni] = datos[i];
 
@@ -62,7 +61,7 @@ function LeerArchivo() {
     } catch (error) {
       if (error.response) {
         const errorMessage = error.response.data.msg;
-        console.log(errorMessage);
+        setLoading(false);
         setAlerta({ msg: errorMessage, error: true });
       }
     }
