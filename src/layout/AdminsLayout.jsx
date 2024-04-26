@@ -1,6 +1,6 @@
 import { Outlet, Navigate } from 'react-router-dom';
-import Footer from '../components/Footer';
 import useAuth from '../hooks/useAuth';
+import { SidebarWithBurgerMenu } from '../components/Sidebar';
 
 const AdminsLayout = () => {
   const { tipoUsuario } = useAuth();
@@ -8,7 +8,7 @@ const AdminsLayout = () => {
   return (
     <section className='min-h-screen bg-sbc-login'>
       <main className='min-h-full'>
-        {/* SI EN EL OBJETO AUTH HAY UNA PROPIEDAD LLAMADA codigoSocio */}
+        <SidebarWithBurgerMenu/>
         {tipoUsuario === "admin" ? <Outlet /> : <Navigate to="/" />}
       </main>
     </section>

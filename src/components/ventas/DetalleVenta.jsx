@@ -24,13 +24,13 @@ const DetalleVenta = ({ mostrarDiv, setMostrarDiv, productosVenta, setProductosV
   return (
     <article className="h-full min-h-[30vh] marker:scroll w-full flex flex-col justify-center items-center gap-3">
       <div className="w-4/5 h-4/5 p-2 rounded-lg bg-blue-gray-100 sans-pro">
-        <p className="font-black uppercase text-sm">Detalle</p>
+        <p className="font-black uppercase text-sm md:text-lg">Detalle</p>
         <hr className="bg-black w-full my-2" />
-        <ul ref={parent} className="flex flex-col">
+        <ul ref={parent} className="flex flex-col text-sm md:text-lg">
           {productosVenta.length ? (
             productosVenta.map((producto) => (
               <li key={producto._id} className="mx-2">
-                <p className="flex justify-between w-full uppercase text-sm">
+                <p className="flex justify-between w-full uppercase">
                   <span>x{producto.cantidad}</span>
                   <span className="px-3 grow text-left">
                     {producto.descripcion}
@@ -46,7 +46,7 @@ const DetalleVenta = ({ mostrarDiv, setMostrarDiv, productosVenta, setProductosV
           )}
         </ul>
         <hr className="bg-black w-full my-2" />
-        <p className="px-2 font-bold flex justify-between w-full uppercase text-sm">
+        <p className="px-2 font-bold flex justify-between w-full uppercase text-sm md:text-lg">
           <span>Total:</span>
           <span>{precioTotal.toLocaleString("es-AR", {
             style: "currency",

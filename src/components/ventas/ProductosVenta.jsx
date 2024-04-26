@@ -55,7 +55,7 @@ const ProductosVenta = ({
           productosPorCategoria.map((producto) => (
             <p
               key={producto._id}
-              className="flex justify-between items-center rounded-lg py-1 bg-white text-cta-azul sans-pro text-2xl font-bold shadow-md uppercase w-3/4 mx-auto"
+              className="flex md:text-lg text-2xl justify-between items-center rounded-lg py-1 bg-white text-cta-azul sans-pro font-bold shadow-md uppercase w-3/4 mx-auto"
             >
               <button
                 className="p-0 ml-1 rounded-lg bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50 transform active:scale-110"

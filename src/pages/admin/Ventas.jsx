@@ -7,6 +7,8 @@ import { iconoFlecha } from "../../libs/Icons";
 import ProductosVenta from "../../components/ventas/ProductosVenta";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import CardCategorias from "../../components/ventas/desktop/CardCategorias";
+import ContainerCategorias from "../../components/ventas/desktop/ContainerCategorias";
 
 const Ventas = () => {
   const [productosPorCategoria, setProductosPorCategoria] = useState([]); //Contiene los productos al seleccionar una categoria
@@ -14,6 +16,13 @@ const Ventas = () => {
   const [productosVenta, setProductosVenta] = useState([]);
   const { productos } = useProductos();
   const navigate = useNavigate();
+
+  const isDesktop = () => {
+    if (window.innerWidth > 640) {
+      return true;
+    }
+    return false;
+  };
 
   return (
     <section className="text-center flex flex-col gap-2 h-full">
@@ -36,8 +45,14 @@ const Ventas = () => {
           }`}
         </h1>
       </div>
-      {/* Article de Categorias */}
-      {!mostrarDiv ? (
+
+      {isDesktop() ? (
+        <ContainerCategorias 
+          productos={productos}
+          productosVenta={productosVenta}
+          setProductosVenta={setProductosVenta}
+        />
+      ) : !mostrarDiv ? (
         <article className="h-1/2 pb-5">
           <Categorias
             setProductosPorCategoria={setProductosPorCategoria}
@@ -52,6 +67,7 @@ const Ventas = () => {
           setProductosVenta={setProductosVenta}
         />
       )}
+
       {/* Article de detalle de productos seleccionado */}
       <DetalleVenta
         mostrarDiv={mostrarDiv}
