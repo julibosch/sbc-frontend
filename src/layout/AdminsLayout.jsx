@@ -8,7 +8,7 @@ const AdminsLayout = () => {
   return (
     <section className='min-h-screen bg-sbc-login'>
       <main className='min-h-full'>
-        <SidebarWithBurgerMenu/>
+        {/* <SidebarWithBurgerMenu/> */}
         {tipoUsuario === "admin" ? <Outlet /> : <Navigate to="/" />}
       </main>
     </section>
