@@ -16,6 +16,8 @@ const AdminInicio = () => {
       navigate("/admin/buffet");
     } else if (target === "Ventas") {
       navigate("/admin/ventas");
+    } else if (target === "Estadisticas") {
+      navigate("/admin/estadisticas");
     }
   };
 
@@ -74,6 +76,12 @@ const AdminInicio = () => {
           onClick={handleClick}
         >
           Ventas
+        </button>
+        <button
+          className="rounded-full py-4 bg-sbc-yellow text-cta-azul sans-pro text-2xl font-bold shadow-md uppercase w-3/4 mx-auto"
+          onClick={handleClick}
+        >
+          Estadisticas
         </button>
       </div>
 

@@ -86,7 +86,7 @@ const BuffetTable = () => {
           ) : (
             <li className="bg-red-200">
               <p className="px-6 py-4 text-sm font-semibold text-gray-900 whitespace-nowrap">
-                No hay ningún socio, cargue uno
+                No hay ningún producto, cargue uno
               </p>
             </li>
           )}
