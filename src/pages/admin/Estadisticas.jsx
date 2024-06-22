@@ -1,72 +1,71 @@
 import React, { useEffect, useState } from "react";
 import GraficoBarra from "../../components/estadisticas/GraficoBarra";
 import InputDate from "../../components/estadisticas/inputDate";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@material-tailwind/react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import clienteAxios from "../../config/axios";
+import GraficoTorta from "../../components/estadisticas/GraficoTorta";
+import BotonVolver from "../../components/BotonVolver";
+import { SelectorGrafico } from "../../components/estadisticas/SelectorGrafico";
+import { parse, startOfDay, isAfter } from "date-fns";
 
 const Estadisticas = () => {
   const [fechaDesde, setFechaDesde] = useState(null);
   const [fechaHasta, setFechaHasta] = useState(null);
+  const [cargando, setCargando] = useState(false);
   const [fechasErroneas, setFechasErroneas] = useState(false);
   const [fechasGrafico, setFechasGrafico] = useState([]);
-
-  const navigate = useNavigate();
+  const [graficoVisible, setGraficoVisible] = useState("barras");
 
   const consultarVentasFinDeSemana = async () => {
     try {
-      const respuestaAxios = await clienteAxios.post('/admin/ventasFinDeSemana', {fechaDesde, fechaHasta});
+      setCargando(true);
+      const respuestaAxios = await clienteAxios.post(
+        "/admin/ventasFinDeSemana",
+        { fechaDesde, fechaHasta }
+      );
       setFechasGrafico(respuestaAxios.data);
-      console.log(fechasGrafico)
+      setCargando(false);
     } catch (error) {
-      console.log(error)
+      setCargando(false);
+      toast.error(error.message);
     }
   };
 
   useEffect(() => {
-    // Pone en true si algunas de las fechas estan vacias y deshabilita el boton
-    setFechasErroneas(fechaDesde == null || fechaHasta == null);
+    if (!fechaDesde || !fechaHasta) {
+      setFechasErroneas(true);
+      return;
+    }
 
-    // if (fechaDesde > fechaHasta) {
-    //   setFechasErroneas(true);
-    //   toast.error(
-    //     <span>
-    //       Fechas incorrectas{" "}
-    //       <span className="underline font-bold">
-    //         Fecha desde debe ser menor que fecha hasta
-    //       </span>
-    //     </span>
-    //   );
-    // }
+    // Usa date-fns para parsear las fechas y obtener solo día, mes y año
+    const fechaDesdeDate = startOfDay(
+      parse(fechaDesde, "dd/MM/yyyy", new Date())
+    );
+    const fechaHastaDate = startOfDay(
+      parse(fechaHasta, "dd/MM/yyyy", new Date())
+    );
+
+    if (isAfter(fechaDesdeDate, fechaHastaDate)) {
+      setFechasErroneas(true);
+      toast.error(
+        <span>
+          Fechas incorrectas{" "}
+          <span className="underline font-bold">
+            Fecha desde debe ser menor que fecha hasta
+          </span>
+        </span>
+      );
+    } else {
+      setFechasErroneas(false);
+    }
   }, [fechaDesde, fechaHasta]);
 
   return (
     <div className="flex flex-col h-full">
       <div className="py-6 bg-login-form shadow-md w-full">
-        <button
-          className="w-14 h-14 left-3 top-3 absolute bg-sbc-yellow flex justify-center items-center rounded-full shadow-md"
-          onClick={() => navigate("/admin")}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="icon icon-tabler icon-tabler-arrow-left"
-            width="44"
-            height="44"
-            viewBox="0 0 24 24"
-            strokeWidth="1.5"
-            stroke="#000000"
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-            <line x1="5" y1="12" x2="19" y2="12" />
-            <line x1="5" y1="12" x2="11" y2="18" />
-            <line x1="5" y1="12" x2="11" y2="6" />
-          </svg>
-        </button>
+        <BotonVolver />
         <p className="text-center text-3xl text-blue-gray-50 carter">
           Estadisticas
         </p>
@@ -76,7 +75,7 @@ const Estadisticas = () => {
         <InputDate setFecha={setFechaHasta} type="hasta" />
         <div className="p-5">
           <Button
-            // loading={isLoading}
+            loading={cargando}
             disabled={fechasErroneas}
             color="blue"
             className="w-full mb-5 text-sm uppercase"
@@ -85,7 +84,13 @@ const Estadisticas = () => {
             Consultar ventas
           </Button>
         </div>
-        <GraficoBarra fechasGrafico={fechasGrafico} />
+        <div className="w-full flex justify-center items-center mb-10">
+          <GraficoTorta
+            fechasGrafico={fechasGrafico}
+            fechaDesde={fechaDesde}
+            fechaHasta={fechaHasta}
+          />
+        </div>
       </div>
       <ToastContainer
         position="bottom-center"

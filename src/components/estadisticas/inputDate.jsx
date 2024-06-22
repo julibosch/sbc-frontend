@@ -15,13 +15,13 @@ export default function InputDate({ setFecha, type }) {
 
   const handleDateChange = (selectDate) => {
     setDate(selectDate);
-    // console.log("Selected date:", date ? format(date, "PPP", { locale: es }) : "");
     if (selectDate) {
       const formattedDate = format(selectDate, 'dd/MM/yyyy');
-      console.log(formattedDate)
       setFecha(formattedDate);
     }
   };
+
+  const today = new Date(); //Se usa en el calendario para bloquear fechas posteriores a la actual
  
   return (
     <div className="p-5">
@@ -37,6 +37,7 @@ export default function InputDate({ setFecha, type }) {
         <PopoverContent>
           <DayPicker
             mode="single"
+            disabled={{ after: today }}
             locale={es}
             selected={date}
             onSelect={handleDateChange}
