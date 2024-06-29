@@ -25,23 +25,29 @@ const FooterVentas = ({
 
   const handleConfirmarVenta = async () => {
     setIsLoading(true);
-    try {
+    const imprimirTicket = productosVenta.some(producto => producto.categoria == 'Bebidas' || producto.categoria == 'Alimentos');
 
+    try {
       const responseVenta = await socioAxios.post("/admin/ventas", {
         productos: productosVenta,
         precioTotal,
       });
       notifySuccess(responseVenta.data.message);
-      if (responseVenta) {
+      //Si se registro la venta en mongo y no hay categoria(otros) solamente en la venta, imprime el ticket
+      if (responseVenta && imprimirTicket) {
         const url = import.meta.env.VITE_BACKEND_PHP;
         const respuestaTicket = await axios.post(url, {productos: productosVenta, precioTotal});
+
+        if (respuestaTicket.data.includes("Fatal error</b>:  Uncaught Error: Class &quot;IntlBreakIterator&quot")) {
+          notifyError("Hubo un error, revise la conexion con la ticketera.");
+        }
       }
 
       setProductosVenta([]);
       setIsLoading(false);
     } catch (error) {
       console.log(error)
-      notifyError("Hubo un error, revise la Ticketera o el Wifi");
+      notifyError("Hubo un error, revise el WiFi o el servidor XAMPP.");
       setIsLoading(false);
     }
   };

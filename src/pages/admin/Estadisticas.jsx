@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import GraficoBarra from "../../components/estadisticas/GraficoBarra";
 import InputDate from "../../components/estadisticas/inputDate";
 import { Button } from "@material-tailwind/react";
 import { ToastContainer, toast } from "react-toastify";
@@ -7,7 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 import clienteAxios from "../../config/axios";
 import GraficoTorta from "../../components/estadisticas/GraficoTorta";
 import BotonVolver from "../../components/BotonVolver";
-import { SelectorGrafico } from "../../components/estadisticas/SelectorGrafico";
 import { parse, startOfDay, isAfter } from "date-fns";
 
 const Estadisticas = () => {
@@ -16,7 +14,6 @@ const Estadisticas = () => {
   const [cargando, setCargando] = useState(false);
   const [fechasErroneas, setFechasErroneas] = useState(false);
   const [fechasGrafico, setFechasGrafico] = useState([]);
-  const [graficoVisible, setGraficoVisible] = useState("barras");
 
   const consultarVentasFinDeSemana = async () => {
     try {
@@ -71,8 +68,10 @@ const Estadisticas = () => {
         </p>
       </div>
       <div className="w-3/4 mx-auto mt-5">
-        <InputDate setFecha={setFechaDesde} type="desde" />
-        <InputDate setFecha={setFechaHasta} type="hasta" />
+        <div className="flex items-center justify-center">
+          <InputDate setFecha={setFechaDesde} type="desde" />
+          <InputDate setFecha={setFechaHasta} type="hasta" />
+        </div>
         <div className="p-5">
           <Button
             loading={cargando}

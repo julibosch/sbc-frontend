@@ -77,7 +77,7 @@ const Ventas = () => {
       />
       <ToastContainer
         position="bottom-center"
-        autoClose={1500}
+        autoClose={2000}
         limit={1}
         hideProgressBar={false}
         newestOnTop={false}

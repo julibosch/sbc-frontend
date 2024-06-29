@@ -8,20 +8,16 @@ const CardCategorias = ({
   setProductosVenta,
 }) => {
   const [productosPorCat, setProductosPorCat] = useState([]);
-  console.log(productos);
-  console.log(categoriaTitle);
 
   const obtenerProductosCategoria = (categoriaTitle, productos) => {
     const productosFiltrados = [...productos].filter(
       (producto) =>
         producto?.categoria.toLowerCase() == categoriaTitle.toLowerCase()
     );
-    console.log(productosFiltrados);
     setProductosPorCat(productosFiltrados);
   };
 
   useEffect(() => {
-    console.log("Obteniendo productos para: ", categoriaTitle);
     obtenerProductosCategoria(categoriaTitle, productos);
   }, [categoriaTitle]);
 

@@ -5,7 +5,7 @@ import {
   PopoverHandler,
   PopoverContent,
 } from "@material-tailwind/react";
-import { format } from "date-fns";
+import { format, add } from 'date-fns';
 import { es } from "date-fns/locale";
 import { DayPicker } from "react-day-picker";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
@@ -14,9 +14,13 @@ export default function InputDate({ setFecha, type }) {
   const [date, setDate] = React.useState();
 
   const handleDateChange = (selectDate) => {
+    console.log(selectDate);
     setDate(selectDate);
     if (selectDate) {
-      const formattedDate = format(selectDate, 'dd/MM/yyyy');
+      const adjustedDate = type === "hasta" ? add(selectDate, { days:1 }) : selectDate;
+      const formattedDate = format(adjustedDate, 'dd/MM/yyyy HH:mm:ss');
+
+      console.log(formattedDate);
       setFecha(formattedDate);
     }
   };
