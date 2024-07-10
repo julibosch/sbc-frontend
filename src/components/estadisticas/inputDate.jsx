@@ -15,8 +15,10 @@ export default function InputDate({ setFecha, type }) {
 
   const handleDateChange = (selectDate) => {
     setDate(selectDate);
+
     if (selectDate) {
-      const formattedDate = format(selectDate, 'dd/MM/yyyy');
+      const formattedDate = format(selectDate, 'd/M/yyyy');
+
       setFecha(formattedDate);
     }
   };
