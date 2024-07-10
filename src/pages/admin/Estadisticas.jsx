@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import GraficoBarra from "../../components/estadisticas/GraficoBarra";
 import InputDate from "../../components/estadisticas/inputDate";
 import { Button } from "@material-tailwind/react";
 import { ToastContainer, toast } from "react-toastify";
@@ -7,7 +6,6 @@ import "react-toastify/dist/ReactToastify.css";
 import clienteAxios from "../../config/axios";
 import GraficoTorta from "../../components/estadisticas/GraficoTorta";
 import BotonVolver from "../../components/BotonVolver";
-import { SelectorGrafico } from "../../components/estadisticas/SelectorGrafico";
 import { parse, startOfDay, isAfter } from "date-fns";
 
 const Estadisticas = () => {
@@ -16,13 +14,12 @@ const Estadisticas = () => {
   const [cargando, setCargando] = useState(false);
   const [fechasErroneas, setFechasErroneas] = useState(false);
   const [fechasGrafico, setFechasGrafico] = useState([]);
-  const [graficoVisible, setGraficoVisible] = useState("barras");
 
   const consultarVentasFinDeSemana = async () => {
     try {
       setCargando(true);
       const respuestaAxios = await clienteAxios.post(
-        "/admin/ventasFinDeSemana",
+        "/admin/consultar-ventas-fechas",
         { fechaDesde, fechaHasta }
       );
       setFechasGrafico(respuestaAxios.data);
@@ -41,10 +38,10 @@ const Estadisticas = () => {
 
     // Usa date-fns para parsear las fechas y obtener solo día, mes y año
     const fechaDesdeDate = startOfDay(
-      parse(fechaDesde, "dd/MM/yyyy", new Date())
+      parse(fechaDesde, "d/M/yyyy", new Date())
     );
     const fechaHastaDate = startOfDay(
-      parse(fechaHasta, "dd/MM/yyyy", new Date())
+      parse(fechaHasta, "d/M/yyyy", new Date())
     );
 
     if (isAfter(fechaDesdeDate, fechaHastaDate)) {
