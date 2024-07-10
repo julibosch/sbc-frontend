@@ -5,23 +5,11 @@ import {
   PopoverHandler,
   PopoverContent,
 } from "@material-tailwind/react";
-import { format } from "date-fns";
 import { es } from "date-fns/locale";
 import { DayPicker } from "react-day-picker";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
  
-export default function InputDate({ setFecha, type }) {
-  const [date, setDate] = React.useState();
-
-  const handleDateChange = (selectDate) => {
-    setDate(selectDate);
-
-    if (selectDate) {
-      const formattedDate = format(selectDate, 'd/M/yyyy');
-
-      setFecha(formattedDate);
-    }
-  };
+export default function InputDate({ range, setRange }) {
 
   const today = new Date(); //Se usa en el calendario para bloquear fechas posteriores a la actual
  
@@ -30,19 +18,18 @@ export default function InputDate({ setFecha, type }) {
       <Popover placement="bottom">
         <PopoverHandler>
           <Input
-            label={type == "desde" ? "Fecha Desde" : "Fecha Hasta" }
+           label="Abrir Calendario"
             onChange={() => null}
-            value={date ? format(date, "PPP", { locale: es }) : ""}
             color="white"
           />
         </PopoverHandler>
         <PopoverContent>
           <DayPicker
-            mode="single"
+            mode="range"
             disabled={{ after: today }}
             locale={es}
-            selected={date}
-            onSelect={handleDateChange}
+            selected={range}
+            onSelect={setRange}
             showOutsideDays
             className="border-0"
             classNames={{
@@ -58,10 +45,10 @@ export default function InputDate({ setFecha, type }) {
               head_cell: "m-0.5 w-9 font-normal text-sm",
               row: "flex w-full mt-2",
               cell: "text-gray-600 rounded-md h-9 w-9 text-center text-sm p-0 m-0.5 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-gray-900/20 [&:has([aria-selected].day-outside)]:text-white [&:has([aria-selected])]:bg-gray-900/50 first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
-              day: "h-9 w-9 p-0 font-normal",
+              day: "h-9 w-9 p-0 font-black",
               day_range_end: "day-range-end",
               day_selected:
-                "rounded-md bg-gray-900 text-white hover:bg-gray-900 hover:text-white focus:bg-gray-900 focus:text-white",
+                "rounded-md bg-yellow-800 text-gray-900 hover:bg-yellow-900 hover:text-white focus:bg-yellow-800 focus:text-gray-900",
               day_today: "rounded-md bg-gray-200 text-gray-900",
               day_outside:
                 "day-outside text-gray-500 opacity-50 aria-selected:bg-gray-500 aria-selected:text-gray-900 aria-selected:bg-opacity-10",

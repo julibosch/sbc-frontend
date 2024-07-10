@@ -6,11 +6,11 @@ import "react-toastify/dist/ReactToastify.css";
 import clienteAxios from "../../config/axios";
 import GraficoTorta from "../../components/estadisticas/GraficoTorta";
 import BotonVolver from "../../components/BotonVolver";
-import { parse, startOfDay, isAfter } from "date-fns";
+import { addDays, format } from "date-fns";
 
 const Estadisticas = () => {
-  const [fechaDesde, setFechaDesde] = useState(null);
-  const [fechaHasta, setFechaHasta] = useState(null);
+  const [range, setRange] = useState({ from: null, to: null });
+  const [rangeFormateado, setRangeFormateado] = useState({ from: '', to: '' });
   const [cargando, setCargando] = useState(false);
   const [fechasErroneas, setFechasErroneas] = useState(false);
   const [fechasGrafico, setFechasGrafico] = useState([]);
@@ -20,7 +20,7 @@ const Estadisticas = () => {
       setCargando(true);
       const respuestaAxios = await clienteAxios.post(
         "/admin/consultar-ventas-fechas",
-        { fechaDesde, fechaHasta }
+        { rangeFormateado }
       );
       setFechasGrafico(respuestaAxios.data);
       setCargando(false);
@@ -31,34 +31,16 @@ const Estadisticas = () => {
   };
 
   useEffect(() => {
-    if (!fechaDesde || !fechaHasta) {
+    if (!range || !range.from || !range.to) {
       setFechasErroneas(true);
       return;
     }
-
-    // Usa date-fns para parsear las fechas y obtener solo día, mes y año
-    const fechaDesdeDate = startOfDay(
-      parse(fechaDesde, "d/M/yyyy", new Date())
-    );
-    const fechaHastaDate = startOfDay(
-      parse(fechaHasta, "d/M/yyyy", new Date())
-    );
-
-    if (isAfter(fechaDesdeDate, fechaHastaDate)) {
-      setFechasErroneas(true);
-      toast.error(
-        <span>
-          Fechas incorrectas{" "}
-          <span className="underline font-bold">
-            Fecha desde debe ser menor que fecha hasta
-          </span>
-        </span>
-      );
-    } else {
-      setFechasErroneas(false);
-    }
-  }, [fechaDesde, fechaHasta]);
-
+    const fromFormatted = format(range.from, 'd/M/yyyy');
+    const toFormatted = format(range.to, 'd/M/yyyy');
+    setRangeFormateado({ from: fromFormatted, to: toFormatted });
+    setFechasErroneas(false);
+  }, [range]);
+  
   return (
     <div className="flex flex-col h-full">
       <div className="py-6 bg-login-form shadow-md w-full">
@@ -68,8 +50,7 @@ const Estadisticas = () => {
         </p>
       </div>
       <div className="w-3/4 mx-auto mt-5">
-        <InputDate setFecha={setFechaDesde} type="desde" />
-        <InputDate setFecha={setFechaHasta} type="hasta" />
+        <InputDate range={range} setRange={setRange} />
         <div className="p-5">
           <Button
             loading={cargando}
@@ -84,8 +65,7 @@ const Estadisticas = () => {
         <div className="w-full flex justify-center items-center mb-10">
           <GraficoTorta
             fechasGrafico={fechasGrafico}
-            fechaDesde={fechaDesde}
-            fechaHasta={fechaHasta}
+            rangeFormateado={rangeFormateado}
           />
         </div>
       </div>

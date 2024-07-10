@@ -7,8 +7,7 @@ import {
 import Chart from "react-apexcharts";
 
 export default function GraficoTorta({
-  fechaDesde,
-  fechaHasta,
+  rangeFormateado,
   fechasGrafico,
 }) {
   const nombreProductos = fechasGrafico.map((producto) => producto.descripcion);
@@ -58,7 +57,7 @@ export default function GraficoTorta({
       >
         <div>
           <Typography variant="h6" color="blue-gray">
-            Período de {fechaDesde} - {fechaHasta}
+            Período de {rangeFormateado?.from ? rangeFormateado.from : ''} - {rangeFormateado?.to ? rangeFormateado.to : ''}
           </Typography>
         </div>
       </CardHeader>
