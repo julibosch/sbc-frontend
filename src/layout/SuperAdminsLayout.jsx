@@ -4,7 +4,6 @@ import useAuth from '../hooks/useAuth';
 
 const SuperAdminsLayout = () => {
   const { tipoUsuario } = useAuth();
-  console.log(tipoUsuario)
 
   return (
     <>

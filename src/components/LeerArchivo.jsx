@@ -24,7 +24,6 @@ function LeerArchivo() {
       const workbook = XLSX.read(e.target.result, { type: "binary" });
       const hoja = workbook.Sheets[workbook.SheetNames[0]];
       const datos = XLSX.utils.sheet_to_json(hoja, { header: 1 });
-      console.log(datos)
 
       const nuevosSocios1 = [];
 
