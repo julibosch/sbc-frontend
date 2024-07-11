@@ -24,6 +24,7 @@ const ProductosVenta = ({
           descripcion: producto.descripcion,
           cantidad: 1,
           precioUnitario: producto.precio,
+          categoria: producto.categoria
         },
       ]);
     }
