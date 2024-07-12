@@ -5,13 +5,18 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import Chart from "react-apexcharts";
+import { format } from 'date-fns';
 
 export default function GraficoTorta({
-  rangeFormateado,
+  range,
   fechasGrafico,
 }) {
   const nombreProductos = fechasGrafico.map((producto) => producto.descripcion);
   const precioProductos = fechasGrafico.map((producto) => producto.totalVentas);
+
+  const formatFecha = (date) => {
+    return date ? format(date, 'dd/MM/yyyy') : '';
+  };
 
   const chartConfig = {
     type: "pie",
@@ -57,7 +62,7 @@ export default function GraficoTorta({
       >
         <div>
           <Typography variant="h6" color="blue-gray">
-            Período de {rangeFormateado?.from ? rangeFormateado.from : ''} - {rangeFormateado?.to ? rangeFormateado.to : ''}
+          Período de {formatFecha(range?.from)} - {formatFecha(range?.to)}
           </Typography>
         </div>
       </CardHeader>
